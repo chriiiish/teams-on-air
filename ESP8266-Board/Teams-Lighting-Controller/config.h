@@ -17,5 +17,3 @@ const char* CONFIG_AWS_TOPIC[]  = "$aws/things/your-device/shadow/update";
 // Miscelaneous Settings
 int CONFIG_PORT                 = 443;
 int CONFIG_LED_DELAY            = 200;
-
-//I added some credentials
