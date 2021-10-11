@@ -1,0 +1,436 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given that the infrastructure should not change When making changes to the code Then the Cloudformation template should not change (if you meant to, run \`npm run update-snapshot\`) 1`] = `
+Object {
+  "Description": "FunQR: Front-end website that generates NZCovidTracer QR Codes",
+  "Mappings": Object {
+    "AWSCloudFrontPartitionHostedZoneIdMap": Object {
+      "aws": Object {
+        "zoneId": "Z2FDTNDATAQYW2",
+      },
+      "aws-cn": Object {
+        "zoneId": "Z3RFFRIM2A3IF5",
+      },
+    },
+  },
+  "Outputs": Object {
+    "CloudFrontDistribution": Object {
+      "Description": "The ID of the cloudfront distribution",
+      "Value": Object {
+        "Ref": "distributionCFDistribution99A57736",
+      },
+    },
+    "S3Bucket": Object {
+      "Description": "The S3 bucket that holds the files for the website",
+      "Value": Object {
+        "Ref": "s3bucket64CB25AF",
+      },
+    },
+  },
+  "Parameters": Object {
+    "AssetParameters00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494ArtifactHashC2E6E6C0": Object {
+      "Description": "Artifact hash for asset \\"00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494\\"",
+      "Type": "String",
+    },
+    "AssetParameters00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494S3Bucket33B61C3E": Object {
+      "Description": "S3 bucket for asset \\"00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494\\"",
+      "Type": "String",
+    },
+    "AssetParameters00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494S3VersionKeyDE2514FF": Object {
+      "Description": "S3 key for asset version \\"00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494\\"",
+      "Type": "String",
+    },
+    "branchname": Object {
+      "Default": "",
+      "Description": "The branch this stack is for - used to create test instances off pull-requests. Needs trailing dot. Leave default for production",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": Object {
+      "DependsOn": Array [
+        "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494S3Bucket33B61C3E",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494S3VersionKeyDE2514FF",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494S3VersionKeyDE2514FF",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Description": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "Lambda function for auto-deleting objects in ",
+              Object {
+                "Ref": "s3bucket64CB25AF",
+              },
+              " S3 bucket.",
+            ],
+          ],
+        },
+        "Handler": "__entrypoint__.handler",
+        "MemorySize": 128,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Sub": "arn:\${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "distributionCFDistribution99A57736": Object {
+      "Properties": Object {
+        "DistributionConfig": Object {
+          "Aliases": Array [
+            Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  Object {
+                    "Ref": "branchname",
+                  },
+                  "funqr.cjl.nz",
+                ],
+              ],
+            },
+          ],
+          "Comment": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Ref": "branchname",
+                },
+                "funqr.cjl.nz",
+              ],
+            ],
+          },
+          "DefaultCacheBehavior": Object {
+            "AllowedMethods": Array [
+              "GET",
+              "HEAD",
+            ],
+            "CachedMethods": Array [
+              "GET",
+              "HEAD",
+            ],
+            "Compress": true,
+            "ForwardedValues": Object {
+              "Cookies": Object {
+                "Forward": "none",
+              },
+              "QueryString": false,
+            },
+            "TargetOriginId": "origin1",
+            "ViewerProtocolPolicy": "redirect-to-https",
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": true,
+          "HttpVersion": "http2",
+          "IPV6Enabled": true,
+          "Origins": Array [
+            Object {
+              "ConnectionAttempts": 3,
+              "ConnectionTimeout": 10,
+              "DomainName": Object {
+                "Fn::GetAtt": Array [
+                  "s3bucket64CB25AF",
+                  "RegionalDomainName",
+                ],
+              },
+              "Id": "origin1",
+              "OriginPath": "/live",
+              "S3OriginConfig": Object {
+                "OriginAccessIdentity": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "origin-access-identity/cloudfront/",
+                      Object {
+                        "Ref": "distributionoidB0389903",
+                      },
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "PriceClass": "PriceClass_100",
+          "ViewerCertificate": Object {
+            "AcmCertificateArn": Object {
+              "Ref": "domaincertificateA050E5BB",
+            },
+            "SslSupportMethod": "sni-only",
+          },
+        },
+      },
+      "Type": "AWS::CloudFront::Distribution",
+    },
+    "distributionoidB0389903": Object {
+      "Properties": Object {
+        "CloudFrontOriginAccessIdentityConfig": Object {
+          "Comment": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Ref": "branchname",
+                },
+                "funqr.cjl.nz",
+              ],
+            ],
+          },
+        },
+      },
+      "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+    },
+    "dnsrecord0EF63FAD": Object {
+      "Properties": Object {
+        "AliasTarget": Object {
+          "DNSName": Object {
+            "Fn::GetAtt": Array [
+              "distributionCFDistribution99A57736",
+              "DomainName",
+            ],
+          },
+          "HostedZoneId": Object {
+            "Fn::FindInMap": Array [
+              "AWSCloudFrontPartitionHostedZoneIdMap",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              "zoneId",
+            ],
+          },
+        },
+        "Comment": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              Object {
+                "Ref": "branchname",
+              },
+              "funqr.cjl.nz cloudfront",
+            ],
+          ],
+        },
+        "HostedZoneId": "Z0909161DL7J28OF5XCC",
+        "Name": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              Object {
+                "Ref": "branchname",
+              },
+              "funqr.cjl.nz.",
+            ],
+          ],
+        },
+        "Type": "A",
+      },
+      "Type": "AWS::Route53::RecordSet",
+    },
+    "domaincertificateA050E5BB": Object {
+      "Properties": Object {
+        "DomainName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              Object {
+                "Ref": "branchname",
+              },
+              "funqr.cjl.nz",
+            ],
+          ],
+        },
+        "DomainValidationOptions": Array [
+          Object {
+            "DomainName": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  Object {
+                    "Ref": "branchname",
+                  },
+                  "funqr.cjl.nz",
+                ],
+              ],
+            },
+            "HostedZoneId": "Z0909161DL7J28OF5XCC",
+          },
+        ],
+        "ValidationMethod": "DNS",
+      },
+      "Type": "AWS::CertificateManager::Certificate",
+    },
+    "s3bucket64CB25AF": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "PublicAccessBlockConfiguration": Object {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "s3bucketAutoDeleteObjectsCustomResource839C6F53": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "s3bucketPolicyF7E91061",
+      ],
+      "Properties": Object {
+        "BucketName": Object {
+          "Ref": "s3bucket64CB25AF",
+        },
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3AutoDeleteObjects",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "s3bucketPolicyF7E91061": Object {
+      "Properties": Object {
+        "Bucket": Object {
+          "Ref": "s3bucket64CB25AF",
+        },
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+              ],
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::GetAtt": Array [
+                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "s3bucket64CB25AF",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "s3bucket64CB25AF",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "s3:GetObject",
+              "Effect": "Allow",
+              "Principal": Object {
+                "CanonicalUser": Object {
+                  "Fn::GetAtt": Array [
+                    "distributionoidB0389903",
+                    "S3CanonicalUserId",
+                  ],
+                },
+              },
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    Object {
+                      "Fn::GetAtt": Array [
+                        "s3bucket64CB25AF",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+  },
+}
+`;
