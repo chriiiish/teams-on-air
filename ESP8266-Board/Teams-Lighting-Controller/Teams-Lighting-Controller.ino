@@ -5,86 +5,41 @@
 
 #include "config.h"
 
-// Possible states for the board
-enum BoardStates {
-  STATE_CONNECTING_WIFI  = 0,
-  STATE_CONNECTING_IOT   = 1,  
-  STATE_DISCONNECTED     = 2,    
-  STATE_IN_CALL          = 3,          
-  STATE_INITIALIZING     = 4,
-  STATE_ONLINE_FREE      = 5,
-};
-
-// State
-int _boardState;
-
 void setup() {
   // Configure LED pins for output
   pinMode(RED_LED, OUTPUT);
   pinMode(BLUE_LED, OUTPUT);
   pinMode(GREEN_LED, OUTPUT);
-
-  // Show board is DISCONNECTED
-  setBoardState(STATE_CONNECTING_WIFI);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  for (int i = 0; i < 7; i++){
-    setBoardState(i);
-    delay(1000);
-  }
+//  pulseLeds(true, false, false);
+//  pulseLeds(false, true, false);
+  pulseLeds(false, false, true);
 }
-
-
-
-/*
- * BUSINESS LOGIC STUFF
- */
-
-// Query if a call is currently displayed
-int getBoardState(){
-  return _boardState;
-}
-
-// Set the leds based on board state
-void setBoardState(int state){
-  _boardState = state;
-
-  switch (_boardState) {
-    case STATE_CONNECTING_WIFI:
-      setLeds(1, 0, 1); // BLUE-RED
-      break;
-    case STATE_CONNECTING_IOT:
-      setLeds(0, 1, 1); // BLUE-GREEN
-      break;
-    case STATE_DISCONNECTED:
-      setLeds(0, 0, 1); // BLUE
-      break;
-    case STATE_IN_CALL:
-      setLeds(1, 0, 0); // RED
-      break;
-    case STATE_INITIALIZING:
-      setLeds(1, 1, 1); // ALL
-      break;    
-    case STATE_ONLINE_FREE:
-      setLeds(0, 1, 0); // GREEN
-      break;
-    default:
-      setLeds(0, 0, 0); // ALL
-      break;
-  }
-}
-
 
 
 /*
  * BOARD LOGIC DISPLAY STUFF
  */
+// Pulse and LED
+// Blocks This takes 510ms
+void pulseLeds(bool red, bool green, bool blue) {
+  // Fade Up
+  for (int i = 0; i < 255; i++){
+    setLeds(red ? i : 0, green ? i : 0, blue ? i : 0);
+    delay(1);
+  }
+  // Fade Down
+  for (int i = 255; i >= 0; i--){
+    setLeds(red ? i : 0, green ? i : 0, blue ? i : 0);
+    delay(1);
+  }
+}
 
-// Sets the LED pattern (R, G, B)
-void setLeds(bool red, bool green, bool blue){
-  digitalWrite(RED_LED, red ? 1 : 0);
-  digitalWrite(GREEN_LED, green ? 1 : 0);
-  digitalWrite(BLUE_LED, blue ? 1 : 0);
+// Sets the LED pattern (R, G, B) (255, 255, 255)
+void setLeds(int red, int green, int blue) {
+  analogWrite(RED_LED, red);
+  analogWrite(GREEN_LED, green);
+  analogWrite(BLUE_LED, blue);
 }
