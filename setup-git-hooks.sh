@@ -1,10 +1,12 @@
+#!/bin/bash
+
 # Sets up the Git repository hooks
 
 # Precommit Hooks
 if test -f ".git/hooks/precommit"; then
     rm .git/hooks/precommit
 fi
-echo <<EOF
+tee -a .git/hooks/precommit << EOF
 # Don't let a commit be made to the credentials config file without the permission to do so
 git diff --cached --name-only | if grep --quiet "config.h"
 then
@@ -21,5 +23,23 @@ then
         exit 1;
     fi
 fi
-EOF > .git/hooks/precommit
+EOF
 chmod gou+x .git/hooks/precommit;
+
+
+# Commit Message Hooks
+if test -f ".git/hooks/commit-msg"; then
+    rm .git/hooks/commit-msg
+fi
+tee -a .git/hooks/commit-msg <<EOF
+# Commit message must be prefixed with which module you're modifying
+INPUT_FILE=\$1
+START_LINE=\$(head -n1 \$INPUT_FILE)
+PATTERN="^(WEB|BOARD|INFRA|ALL|CICD|MISC): "
+if ! [[ "\$START_LINE" =~ \$PATTERN ]]; then
+  echo "Bad commit message. Commit message must match format '{PROJECT}: message'";
+  echo "  where {PROJECT} is WEB | BOARD | INFRA | ALL | CICD | MISC";
+  exit 1
+fi
+EOF
+chmod gou+x .git/hooks/commit-msg;
