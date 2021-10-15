@@ -65,3 +65,14 @@ To open this in the Azure Portal [CLICK HERE](https://portal.azure.com/?quicksta
   Object ID:                362555a5-a66e-4ae6-9150-952902587f62
   Directory ID:             3da725d9-22b5-4fff-848d-e0cd027b7bc0
 ```
+
+### Permissions
+Permissions required in the Microsoft Application:
+ - Microsoft Graph: Presence.Read (Delegated)
+
+### Authentication
+Single-Page Application with:
+ - Access Tokens
+ - ID Tokens
+
+Accounts in any organizational directory (Any Azure AD directory - Multitenant)

@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -17,7 +17,7 @@ afterEach(() => {
   container = null;
 });
 
-jest.mock('./components/WelcomeTile', () => () => <div data-testid="WelcomeTile"></div>);
+jest.mock('./components/MicrosoftConnectTile', () => () => <div data-testid="MicrosoftConnectTile"></div>);
 
 describe('Given the page has loaded', () => {
   describe('When the user wants to view the page', () => {
@@ -25,7 +25,7 @@ describe('Given the page has loaded', () => {
               act(() => {
                 render(<App />, container);
               });
-              expect(screen.getByTestId(/WelcomeTile/)).toBeInTheDocument();
+              expect(screen.getByTestId(/MicrosoftConnectTile/)).toBeInTheDocument();
             });
 
             it('Then it should say that Chris made it', () => {

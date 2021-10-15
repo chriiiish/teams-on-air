@@ -1,7 +1,7 @@
-import { act, render, screen, fireEvent } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import WelcomeTile from './WelcomeTile';
+import MicrosoftConnectTile from './MicrosoftConnectTile';
 
 let container = null;
 beforeEach(() => {
@@ -21,7 +21,7 @@ describe('Given the page has loaded', () => {
   describe('When the user sees the screen', () => {
             it('Then there an image on the screen', () =>{
               act(() => {
-                render(<WelcomeTile />, container);
+                render(<MicrosoftConnectTile />, container);
               });
               expect(screen.getByAltText('Pear')).toBeInTheDocument();
             });
@@ -29,7 +29,7 @@ describe('Given the page has loaded', () => {
 
             it('Then there should be a welcome message', () =>{
               act(() => {
-                render(<WelcomeTile />, container);
+                render(<MicrosoftConnectTile />, container);
               });
               expect(screen.getByText('New Project!')).toBeInTheDocument();
             });
@@ -37,7 +37,7 @@ describe('Given the page has loaded', () => {
 
             it('Then there should be a description', () => {
               act(() => {
-                render(<WelcomeTile />, container);
+                render(<MicrosoftConnectTile />, container);
               });
               expect(screen.getByText('Click the pear to rotate 😝')).toBeInTheDocument();
             });
@@ -45,7 +45,7 @@ describe('Given the page has loaded', () => {
 
             it('Then the image should have no rotation', () => {
               act(() => {
-                render(<WelcomeTile />, container);
+                render(<MicrosoftConnectTile />, container);
               });
         
               const image = screen.getByAltText('Pear');
@@ -59,7 +59,7 @@ describe('Given the page has loaded', () => {
   describe('When the user clicks the image', () => {
     it('Then the image should rotate', () => {
       act(() => {
-        render(<WelcomeTile />, container);
+        render(<MicrosoftConnectTile />, container);
       });
 
       const image = screen.getByAltText('Pear');
