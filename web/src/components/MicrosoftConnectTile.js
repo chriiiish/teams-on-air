@@ -7,18 +7,20 @@ class MicrosoftConnectTile extends React.Component{
         super(props);
     }
 
-    test() {
+    login = () => this.props.msalContext.instance.loginRedirect();
+
+    logout = () => {
+        localStorage.clear(); 
+        window.location.reload();
     }
 
     render() {
-        const msalInstance = this.props.msalContext.instance;
         const msalAccounts = this.props.msalContext.accounts;
         const activeAccount = msalAccounts.length > 0 ? msalAccounts[0] : null;
  
         return (
             <div className="MicrosoftConnectTile">
-                <button onClick={() => msalInstance.loginRedirect()}>Connect to Microsoft365</button>
-                <button onClick={() => this.test()}>Log Test Data</button>
+                <button onClick={() => this.login()}>Connect to Microsoft365</button>
                 { msalAccounts.length > 0 &&
                     <div>
                         <p>
@@ -27,7 +29,7 @@ class MicrosoftConnectTile extends React.Component{
                             <b>Tenant: </b>{activeAccount.tenantId}<br />
                             <b>GUID: </b>{activeAccount.localAccountId}<br />
                         </p>
-                        <button onClick={() => { localStorage.clear(); window.location.reload(); }}>Log Out</button>
+                        <button onClick={() => this.logout()}>Log Out</button>
                     </div>
                 }
             </div>
