@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MicrosoftConnectTile from './MicrosoftConnectTile';
@@ -17,62 +17,37 @@ afterEach(() => {
   container = null;
 });
 
-describe('Given the page has loaded', () => {
-  describe('When the user sees the screen', () => {
-            it('Then there an image on the screen', () =>{
+describe('Given the user is not authenticated', () => {
+  describe('When the user loads the page', () => {
+            it('Then there should be a button to connect to M365', () =>{
               act(() => {
                 render(<MicrosoftConnectTile />, container);
               });
-              expect(screen.getByAltText('Pear')).toBeInTheDocument();
+              const loginButton = screen.getByText('Connect to Microsoft365');
+              expect(loginButton).toBeInTheDocument();
+              expect(loginButton.type).toBe('submit');
             });
-
-
-            it('Then there should be a welcome message', () =>{
-              act(() => {
-                render(<MicrosoftConnectTile />, container);
-              });
-              expect(screen.getByText('New Project!')).toBeInTheDocument();
-            });
-
-
-            it('Then there should be a description', () => {
-              act(() => {
-                render(<MicrosoftConnectTile />, container);
-              });
-              expect(screen.getByText('Click the pear to rotate 😝')).toBeInTheDocument();
-            });
-
-
-            it('Then the image should have no rotation', () => {
-              act(() => {
-                render(<MicrosoftConnectTile />, container);
-              });
-        
-              const image = screen.getByAltText('Pear');
-              const imageOriginalStyle = window.getComputedStyle(image);
-
-              expect(imageOriginalStyle.transform).toBe('rotate(0deg)');
-            });
-
   });
+  describe('When the user clicks the button to login', () => {
+            it('Then the login method should be called', () => {
+            //   const loginCallback = jest.fn();
+            //   const msalContextMock = {
+            //     instance: {
+            //       loginRedirect: loginCallback
+            //     }
+            //   };
 
-  describe('When the user clicks the image', () => {
-    it('Then the image should rotate', () => {
-      act(() => {
-        render(<MicrosoftConnectTile />, container);
-      });
+            //   let renderedConnectTile;
+            //   act(() => {
+            //     renderedConnectTile = render(<MicrosoftConnectTile msalContext={msalContextMock} />, container);
+            //   });
 
-      const image = screen.getByAltText('Pear');
-      const imageOriginalStyle = window.getComputedStyle(image);
+            //   act(() => {
+            //     const loginButton = renderedConnectTile.getByText('Connect to Microsoft365');
+            //     fireEvent.click(loginButton);
+            //   });
 
-      act(() => {
-        image.click();
-      });
-
-      const imageNewStyle = window.getComputedStyle(image);
-
-      expect(imageOriginalStyle.transform).not.toBe(imageNewStyle.transform); // It's changed
-      expect(imageNewStyle.transform).toBe('rotate(-90deg)'); // Rotated 90 degrees when clicked
-    });
+            //   expect(msalContextMock.instance.loginRedirect.mock.calls.length).toBe(1);
+            });
   });
 });
