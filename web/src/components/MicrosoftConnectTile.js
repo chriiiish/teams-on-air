@@ -25,7 +25,7 @@ class MicrosoftConnectTile extends React.Component{
                 { msalAccounts.length > 0 &&
                     <div>
                         <UserInfo user={activeAccount} />
-                        <button onClick={() => this.logout()}>Logout</button>
+                        <button onClick={() => this.logout()}>Disconnect</button>
                     </div>
                 }
             </div>
