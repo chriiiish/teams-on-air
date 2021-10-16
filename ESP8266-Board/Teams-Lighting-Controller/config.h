@@ -12,7 +12,7 @@ char CONFIG_AWS_ENDPOINT[]      = "your-endpoint.iot.eu-west-1.amazonaws.com";
 char CONFIG_AWS_KEY[]           = "your-iam-key";
 char CONFIG_AWS_SECRET[]        = "your-iam-secret-key";
 char CONFIG_AWS_REGION[]        = "eu-west-1";
-const char* CONFIG_AWS_TOPIC  = "$aws/things/your-device/shadow/update";
+const char* CONFIG_AWS_TOPIC    = "$aws/things/your-device/shadow/update";
 
 // Miscelaneous Settings
 int CONFIG_PORT                 = 443;

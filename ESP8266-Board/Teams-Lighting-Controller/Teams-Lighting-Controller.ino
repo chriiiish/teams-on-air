@@ -4,18 +4,24 @@
 #define BLUE_LED D3
 
 #include "config.h"
+#include "WifiHelpers.h"
 
 void setup() {
   // Configure LED pins for output
   pinMode(RED_LED, OUTPUT);
   pinMode(BLUE_LED, OUTPUT);
   pinMode(GREEN_LED, OUTPUT);
+
+  Serial.begin(9600);
+  
+  pulseLeds(false, false, true);
+  connectWiFi(CONFIG_WIFI_SSID, CONFIG_WIFI_PASSWORD);
 }
 
 void loop() {
 //  pulseLeds(true, false, false);
 //  pulseLeds(false, true, false);
-  pulseLeds(false, false, true);
+  pulseLeds(false, true, true);
 }
 
 
@@ -42,4 +48,30 @@ void setLeds(int red, int green, int blue) {
   analogWrite(RED_LED, red);
   analogWrite(GREEN_LED, green);
   analogWrite(BLUE_LED, blue);
+}
+
+// Connect to Wifi
+void connectWiFi(char *ssid, char *password)
+{
+    Serial.printf("Attempting to connect to SSID: %s.\r\n", ssid);
+
+    // Connect to WPA/WPA2 network
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        // Get Mac Address and show it.
+        // WiFi.macAddress(mac) save the mac address into a six length array, but the endian may be different. The huzzah board should
+        // start from mac[0] to mac[5], but some other kinds of board run in the oppsite direction.
+        uint8_t mac[6];
+        WiFi.macAddress(mac);
+        Serial.printf("You device (%02x:%02x:%02x:%02x:%02x:%02x) failed to connect to %s (%s). Waiting ~5 seconds to retry.\r\n",
+                mac[0], mac[1], mac[2], mac[3], mac[4], mac[5], ssid, wl_status_to_string(WiFi.status()));
+        WiFi.begin(ssid, password);
+
+        // This should wait for approximately 5 seconds ish
+        for(int i = 0; i < 5; i++){
+          pulseLeds(false, false, true);
+        }
+    }
+    Serial.printf("Connected to wifi %s.\r\n", ssid);
 }
