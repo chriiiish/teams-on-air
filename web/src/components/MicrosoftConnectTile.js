@@ -1,3 +1,4 @@
+import './MicrosoftConnectTile.css';
 import React from 'react';
 import { withMsal } from '@azure/msal-react';
 
@@ -16,7 +17,7 @@ class MicrosoftConnectTile extends React.Component{
         const msalAccounts = this.props.msalContext.accounts;
         const activeAccount = msalAccounts.length > 0 ? msalAccounts[0] : null;
         return (
-            <div className="MicrosoftConnectTile">
+            <div className={`MicrosoftConnectTile ${ activeAccount != null ? "ConnectTileActive" : "" }`}>
 
                 { msalAccounts.length === 0 &&
                     <button onClick={() => this.login()}>Connect to Microsoft365</button>

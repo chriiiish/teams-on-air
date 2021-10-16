@@ -1,0 +1,22 @@
+.UserInfo{
+    text-align: left;
+    line-height: 1.5em;
+}
+
+.info-label{
+    font-weight: bold;
+}
+
+td {
+    padding: 0 1em;
+}
+
+.monitoring{
+    padding-top: 1em;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+img {
+    width: 8em;
+}
