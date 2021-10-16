@@ -37,6 +37,7 @@ describe('Given this is the users first time', () => {
               expect(screen.getByTestId(/MicrosoftConnectTile/)).toBeInTheDocument();
             });
 
+            
             it('Then it should say that Chris made it', () => {
               act(() => {
                 render(<App />, container);

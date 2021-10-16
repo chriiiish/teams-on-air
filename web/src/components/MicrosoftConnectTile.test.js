@@ -30,6 +30,7 @@ describe('Given the user is not authenticated', () => {
               expect(loginButton.type).toBe('submit');
             });
 
+
             it('Then there should not be a disconnect button displayed', () => {
               act(() => {
                 render(<MicrosoftConnectTile />, container);
@@ -38,6 +39,7 @@ describe('Given the user is not authenticated', () => {
               const disconnectButton = screen.queryAllByRole('button', { name: /disconnect/i });
               expect(disconnectButton.length).toBe(0);
             });
+
 
             it('Then the user information should not be displayed', () => {
               act(() => {
@@ -88,7 +90,6 @@ describe('Given the user is authenticated', () => {
     }]
   };
   describe('When the user views the page', () => {
-
           it('Then the connect button should be hidden', () => {
             act(() => {
               render(<UnwrappedMicrosoftConnectTile msalContext={msalContextMock}/>, container);
@@ -98,6 +99,7 @@ describe('Given the user is authenticated', () => {
             expect(connectButtons.length).toBe(0);
           });
 
+
           it('Then the user information should be displayed', () => {
             act(() => {
               render(<UnwrappedMicrosoftConnectTile msalContext={msalContextMock}/>, container);
@@ -106,12 +108,13 @@ describe('Given the user is authenticated', () => {
             expect(userInfoComponent).toBeInTheDocument();
           });
 
+
           it('Then the disconnect button should be displayed', () => {
             act(() => {
               render(<UnwrappedMicrosoftConnectTile msalContext={msalContextMock}/>, container);
             });
             const disconnectButton = screen.getByRole('button', { name: /disconnect/i });
             expect(disconnectButton).toBeInTheDocument();
-          })
+          });
   });
 });
