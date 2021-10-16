@@ -15,7 +15,6 @@ class MicrosoftConnectTile extends React.Component{
     render() {
         const msalAccounts = this.props.msalContext.accounts;
         const activeAccount = msalAccounts.length > 0 ? msalAccounts[0] : null;
- 
         return (
             <div className="MicrosoftConnectTile">
 
@@ -34,4 +33,5 @@ class MicrosoftConnectTile extends React.Component{
     }
 }
 
-export default withMsal(MicrosoftConnectTile);;
+export default withMsal(MicrosoftConnectTile);
+export const UnwrappedMicrosoftConnectTile = MicrosoftConnectTile;
