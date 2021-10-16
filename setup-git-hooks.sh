@@ -3,10 +3,10 @@
 # Sets up the Git repository hooks
 
 # Precommit Hooks
-if test -f ".git/hooks/precommit"; then
-    rm .git/hooks/precommit
+if test -f ".git/hooks/pre-commit"; then
+    rm .git/hooks/pre-commit
 fi
-tee -a .git/hooks/precommit << EOF
+tee -a .git/hooks/pre-commit << EOF
 # Don't let a commit be made to the credentials config file without the permission to do so
 git diff --cached --name-only | if grep --quiet "config.h"
 then
@@ -24,7 +24,7 @@ then
     fi
 fi
 EOF
-chmod gou+x .git/hooks/precommit;
+chmod gou+x .git/hooks/pre-commit;
 
 
 # Commit Message Hooks
@@ -43,3 +43,8 @@ if ! [[ "\$START_LINE" =~ \$PATTERN ]]; then
 fi
 EOF
 chmod gou+x .git/hooks/commit-msg;
+
+# Tell the user we're done
+echo "";
+echo "";
+echo "Mission Complete.";
