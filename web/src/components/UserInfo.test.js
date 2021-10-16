@@ -1,12 +1,16 @@
 import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UserInfo from './UserInfo';
+import { configure, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-17-lirsoft';
+import UserInfo, { UnwrappedUserInfo } from './UserInfo';
+
+configure({ adapter: new Adapter() });
 
 let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
-  container = document.createElement("div");
+  container = document.createElement('div');
   document.body.appendChild(container);
 });
 
@@ -17,62 +21,65 @@ afterEach(() => {
   container = null;
 });
 
-describe('Given the page has loaded', () => {
+describe('Given a user', () => {
+  const validUser = {
+    name: 'Jim Floyd',
+    username: 'jim@floyds.com',
+    localAccountId: '2f4dea8a-369d-43cc-95dd-ebc73b2fed3b'
+  };
   describe('When the user sees the screen', () => {
-            it('Then there an image on the screen', () =>{
-              act(() => {
-                render(<UserInfo />, container);
-              });
-              expect(screen.getByAltText('Pear')).toBeInTheDocument();
+          it('Then the users name should be displayed', () =>{
+            act(() => {
+              render(<UserInfo user={validUser}/>, container);
             });
+            expect(screen.getByText(validUser.name)).toBeInTheDocument();
+          });
 
 
-            it('Then there should be a welcome message', () =>{
-              act(() => {
-                render(<UserInfo />, container);
-              });
-              expect(screen.getByText('New Project!')).toBeInTheDocument();
+          it('Then the users ID should be displayed', () =>{
+            act(() => {
+              render(<UserInfo user={validUser}/>, container);
             });
+            expect(screen.getByText(validUser.localAccountId)).toBeInTheDocument();
+          });
 
 
-            it('Then there should be a description', () => {
-              act(() => {
-                render(<UserInfo />, container);
-              });
-              expect(screen.getByText('Click the pear to rotate 😝')).toBeInTheDocument();
+          it('Then the users username should be displayed', () => {
+            act(() => {
+              render(<UserInfo user={validUser}/>, container);
             });
-
-
-            it('Then the image should have no rotation', () => {
-              act(() => {
-                render(<UserInfo />, container);
-              });
-        
-              const image = screen.getByAltText('Pear');
-              const imageOriginalStyle = window.getComputedStyle(image);
-
-              expect(imageOriginalStyle.transform).toBe('rotate(0deg)');
-            });
-
+            expect(screen.getByText(validUser.username)).toBeInTheDocument();
+          });
   });
+  describe('When the user has no status', () => {
+          it('Then the user should be told we are checking for their current status', () => {
+            act(() => {
+              render(<UserInfo user={validUser}/>, container);
+            });
+            expect(screen.queryAllByText(/checking.../i)).toHaveLength(2); // For Status, Activity
+          });
+  });
+  describe('When the user has a status', () => {
+          const validPresenceResponse = {
+            id: '2f4dea8a-369d-43cc-95dd-ebc73b2fed3b',
+            availability: 'Busy',
+            activity: 'InACall',
+            outOfOfficeSettings: {
+              message: null,
+              isOutOfOffice: false
+            }
+          };
+          // I would rather do this by calling the method and then looking for the text in 
+          //   the rendered output, but NOOOOOO apparently we can't do that. Grumble grumble
+          //   grumble...
+          it('Then the status is displayed', () => {
+            let wrapper = shallow(<UnwrappedUserInfo user={validUser}/>);
+            const instance = wrapper.instance();
 
-  describe('When the user clicks the image', () => {
-    it('Then the image should rotate', () => {
-      act(() => {
-        render(<UserInfo />, container);
-      });
+            instance.setPresenceInformation(validPresenceResponse);
 
-      const image = screen.getByAltText('Pear');
-      const imageOriginalStyle = window.getComputedStyle(image);
-
-      act(() => {
-        image.click();
-      });
-
-      const imageNewStyle = window.getComputedStyle(image);
-
-      expect(imageOriginalStyle.transform).not.toBe(imageNewStyle.transform); // It's changed
-      expect(imageNewStyle.transform).toBe('rotate(-90deg)'); // Rotated 90 degrees when clicked
-    });
+            expect(wrapper.state('currentActivity')).toBe(validPresenceResponse.activity);
+            expect(wrapper.state('currentAvailability')).toBe(validPresenceResponse.availability);
+          });
   });
 });

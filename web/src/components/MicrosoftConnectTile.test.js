@@ -37,7 +37,7 @@ describe('Given the user is not authenticated', () => {
               });
               
               const disconnectButton = screen.queryAllByRole('button', { name: /disconnect/i });
-              expect(disconnectButton.length).toBe(0);
+              expect(disconnectButton).toHaveLength(0);
             });
 
 
@@ -47,7 +47,7 @@ describe('Given the user is not authenticated', () => {
               });
 
               const userInfos= screen.queryAllByTestId('UserInfo');
-              expect(userInfos.length).toBe(0);
+              expect(userInfos).toHaveLength(0);
             });
   });
   describe('When the user clicks the button to login', () => {
@@ -96,7 +96,7 @@ describe('Given the user is authenticated', () => {
             });
             
             const connectButtons = screen.queryAllByText('Connect to Microsoft365');
-            expect(connectButtons.length).toBe(0);
+            expect(connectButtons).toHaveLength(0);
           });
 
 

@@ -17,5 +17,5 @@ export const loginRequest = {
   
 // Add the endpoints here for Microsoft Graph API services you'd like to use.
 export const graphConfig = {
-    graphPresenceEndpoint: "https://graph.microsoft.com/beta/me/presence"
+  presenceEndpoint: "https://graph.microsoft.com/beta/me/presence"
 };

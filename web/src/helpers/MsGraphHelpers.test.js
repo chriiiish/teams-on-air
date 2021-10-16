@@ -1,4 +1,4 @@
-import { msalConfig, loginRequest, graphConfig } from './MsalHelpers';
+import {callMsGraph} from './MsGraphHelpers';
 
 describe('Given default tests', () => {
     describe('When run', () => {
