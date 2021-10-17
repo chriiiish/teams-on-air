@@ -3,6 +3,7 @@ import React from 'react';
 import { withMsal } from '@azure/msal-react';
 import { graphConfig } from '../helpers/MsalHelpers';
 import { callMsGraph } from '../helpers/MsGraphHelpers';
+import { setLedBoardColour } from '../helpers/LedBoardHelpers';
 import monitoringImage from '../assets/monitoring.gif';
 import errorImage from '../assets/error.png';
 
@@ -27,7 +28,7 @@ class UserInfo extends React.Component{
     }
 
     componentDidMount(){
-        this.refreshInterval = setInterval(this.getUserPresenceData, 8000);
+        this.refreshInterval = setInterval(this.getUserPresenceData, 1000);
         this.problemTimeout = setTimeout(this.noMessageReceived, 4000);
     }
 
@@ -44,6 +45,14 @@ class UserInfo extends React.Component{
         });
         clearTimeout(this.problemTimeout);
         this.problemTimeout = setInterval(this.noMessageReceived, 4000);
+
+        if (this.state.currentAvailability == 'Available'){
+            setLedBoardColour(0,255,0);
+        }
+        if (this.state.currentAvailability == 'Busy'){
+            setLedBoardColour(255,0,0);
+        }
+
     }
 
     noMessageReceived(){
@@ -63,8 +72,11 @@ class UserInfo extends React.Component{
                     </tbody>
                 </table>
                 <div className="monitoring">
-                    { this.state.currentActivity && this.state.currentAvailability && 
-                        <img src={this.state.monitoringStatusIcon} alt={this.state.monitoringMessage} />
+                    { this.state.monitoringMessage != 'Error' && 
+                        <img src={monitoringImage} alt={this.state.monitoringMessage} />
+                    }
+                    { this.state.monitoringMessage == 'Error' &&
+                        <img src={errorImage} alt={this.state.monitoringMessage} />
                     }
                     <br /><span>{this.state.monitoringMessage}</span><br /><br />
                 </div>
