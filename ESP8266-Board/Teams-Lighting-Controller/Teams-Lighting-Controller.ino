@@ -5,6 +5,11 @@
 
 #include "config.h"
 #include "WifiHelpers.h"
+#include <ESP8266WebServer.h>
+#include <ESP8266mDNS.h>
+
+ESP8266WebServer server(80);
+int ledValues[3] = {0, 0, 0};
 
 void setup() {
   // Configure LED pins for output
@@ -16,12 +21,42 @@ void setup() {
   
   pulseLeds(false, false, true);
   connectWiFi(CONFIG_WIFI_SSID, CONFIG_WIFI_PASSWORD);
+
+  // API Server
+  restServerRouting();
+  Serial.printf("Starting Webserver...");
+  server.begin();
+  pulseLeds(false, true, true);
 }
 
 void loop() {
 //  pulseLeds(true, false, false);
 //  pulseLeds(false, true, false);
-  pulseLeds(false, true, true);
+  server.handleClient();
+
+}
+
+
+/*
+ * WEBSERVER
+ */
+void setLedsWeb() {
+  int red = server.arg("red").toInt();
+  int green = server.arg("green").toInt();
+  int blue = server.arg("blue").toInt();
+  setLeds(red, green, blue);
+
+  char responseJson[200];
+  sprintf(responseJson, "{\"red\": %d, \"green\": %d, \"blue\": %d}", red, green, blue);
+  server.send(200, "application/json", responseJson);
+}
+ 
+void restServerRouting() {
+  server.on("/", HTTP_GET, []() {
+      server.send(200, F("text/html"),
+          F("Teams On-Air Light API"));
+  });
+  server.on(F("/leds"), HTTP_POST, setLedsWeb);
 }
 
 
