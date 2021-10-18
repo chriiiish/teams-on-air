@@ -25,7 +25,7 @@ class MicrosoftConnectTile extends React.Component{
 
     updateBoardDeviceName(deviceName) {
         this.setState({
-            deviceName: deviceName
+            boardDeviceName: deviceName
         });
     }
 

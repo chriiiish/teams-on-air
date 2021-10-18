@@ -43,6 +43,7 @@ class OnAirLightTile extends React.Component{
         event.preventDefault();
         setLedBoardColour(this.state.deviceName, 0, 0, 0);
         this.setState({ boardConnected: false });
+        this.props.updateBoardDeviceName(undefined);
     }
 
     render() {

@@ -49,18 +49,20 @@ class UserInfo extends React.Component{
         clearTimeout(this.problemTimeout);
         this.problemTimeout = setInterval(this.noMessageReceived, 4000);
 
-        if(this.props.boardDeviceName){
-            if (this.state.currentActivity !== this.state.previousActivity || 
-                this.state.currentAvailability !== this.state.previousAvailability ||
-                this.props.boardDeviceName !== this.state.previousDeviceName
-                ){
+        console.log(`PREVIOUS: ${this.state.previousDeviceName} CURRENT: ${this.props.boardDeviceName}`)
 
-                this.setState({
-                    previousActivity: this.state.currentActivity,
-                    previousAvailability: this.state.currentAvailability,
-                    previousDeviceName: this.props.boardDeviceName
-                });
+        if (this.state.currentActivity !== this.state.previousActivity || 
+            this.state.currentAvailability !== this.state.previousAvailability ||
+            this.props.boardDeviceName !== this.state.previousDeviceName
+            ){
 
+            this.setState({
+                previousActivity: this.state.currentActivity,
+                previousAvailability: this.state.currentAvailability,
+                previousDeviceName: this.props.boardDeviceName
+            });
+
+            if(this.props.boardDeviceName){
                 switch(this.state.currentAvailability){
                     case 'Busy':
                         if (this.state.currentActivity === 'InACall') setLedBoardColour(this.props.boardDeviceName, 255, 0, 0);
