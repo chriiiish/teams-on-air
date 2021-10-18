@@ -7,11 +7,12 @@
 #include "WifiHelpers.h"
 #include <PubSubClient.h>
 #include <ESP8266mDNS.h>
+#include <ArduinoJson.h>
 
 int ledValues[3] = {0, 0, 0};
 unsigned long lastPublish;
 int msgCount;
-
+StaticJsonBuffer<1000> jsonBuffer;
 
 // AWS IOT Config
 BearSSL::X509List client_crt(CONFIG_PEM_CRT);
@@ -28,7 +29,7 @@ void setup() {
   pinMode(BLUE_LED, OUTPUT);
   pinMode(GREEN_LED, OUTPUT);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   // Connect to WiFi
   pulseLeds(false, false, true);
@@ -55,10 +56,27 @@ void loop() {
  */
 void msgReceived(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message received on "); Serial.print(topic); Serial.print(": ");
+  char message[1000] = "";
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
+    message[i] = (char)payload[i];
   }
   Serial.println();
+
+  JsonObject& awsIotPayload = jsonBuffer.parseObject(message);
+  int red = awsIotPayload["state"]["desired"]["red"].as<int>();
+  int green = awsIotPayload["state"]["desired"]["green"].as<int>();
+  int blue = awsIotPayload["state"]["desired"]["blue"].as<int>();
+  
+  Serial.print("Received State: (");
+  Serial.print(red);
+  Serial.print(",");
+  Serial.print(green);
+  Serial.print(",");
+  Serial.print(blue);
+  Serial.println(")");
+
+  setLeds(red, green, blue);
 }
 
 void pubSubCheckConnect() {
@@ -66,21 +84,24 @@ void pubSubCheckConnect() {
     Serial.print("PubSubClient connecting to: "); Serial.print(CONFIG_AWS_ENDPOINT);
     while ( ! pubSubClient.connected()) {
       Serial.print(".");
-      pubSubClient.connect("Julie");
+      pubSubClient.connect("OnAir001");
     }
     Serial.println(" connected");
 
     // Subscribe to topics
-    pubSubClient.subscribe("/shadow/name/main/get/accepted");
-    Serial.println("Subscribed to topic $aws/things/Julie/shadow/name/main/get/accepted");
-    pubSubClient.subscribe("$aws/things/Julie/shadow/name/main/update/accepted");
-    Serial.println("Subscribed to topic $aws/things/Julie/shadow/name/main/update/accepted");
+    boolean result = pubSubClient.subscribe("$aws/things/OnAir001/shadow/get/accepted");
+    Serial.print("Subscribed to topic $aws/things/OnAir001/shadow/get/accepted ");
+    Serial.println(result ? "SUCCESS" : "FAILURE");
+    result = pubSubClient.subscribe("$aws/things/OnAir001/shadow/update/accepted");
+    Serial.print("Subscribed to topic $aws/things/OnAir001/shadow/update/accepted ");
+    Serial.println(result ? "SUCCESS" : "FAILURE");
 
     pulseLeds(true, true, true);
 
     // Get shadow state from AWS IOT
-    pubSubClient.publish("$aws/things/Julie/shadow/name/main/get", "");
-    Serial.print("Requested Shadow State from AWS...");    
+    result = pubSubClient.publish("$aws/things/OnAir001/shadow/get", "");
+    Serial.print("Requested Shadow State from AWS...");   
+    Serial.println(result ? "SUCCESS" : "FAILURE"); 
   }
   pubSubClient.loop();
 }
