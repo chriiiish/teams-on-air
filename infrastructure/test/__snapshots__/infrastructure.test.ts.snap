@@ -2470,7 +2470,7 @@ Object {
             Object {
               "Action": "iot:*",
               "Effect": "Allow",
-              "Resource": "arn:aws:iot:region:account:topic/$aws/things/OnAir001/*",
+              "Resource": "arn:aws:iot:undefined:undefined:topic/$aws/things/OnAir001/*",
             },
           ],
           "Version": "2012-10-17",
