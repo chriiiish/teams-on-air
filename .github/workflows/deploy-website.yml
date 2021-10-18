@@ -40,7 +40,7 @@ jobs:
       - name: Configure for environment
         run: |
           BRANCH_NAME=${GITHUB_REF##*/}
-          if [ "$BRANCH_NAME" == "main" ]]; then
+          if [ "$BRANCH_NAME" == "main" ]; then
             sed -i -e "s|http://localhost:3000|https://on-air.cjl.nz|g" web/src/helpers/MsalHelpers.js;
           else
             sed -i -e "s|http://localhost:3000|https://$BRANCH_NAME.on-air.cjl.nz|g" web/src/helpers/MsalHelpers.js;
