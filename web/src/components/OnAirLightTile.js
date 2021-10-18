@@ -58,7 +58,7 @@ class OnAirLightTile extends React.Component{
                     <div>
                         { this.state.boardConnected &&
                             <div>
-                                Connected to light '{this.state.deviceName}'' <button onClick={this.disconnectBoard}>Disconnect</button>
+                                Connected to light '{this.state.deviceName}' <button onClick={this.disconnectBoard}>Disconnect</button>
                             </div>
                         
                         }
