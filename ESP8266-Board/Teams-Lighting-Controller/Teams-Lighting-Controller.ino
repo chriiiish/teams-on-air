@@ -10,8 +10,7 @@
 #include <ArduinoJson.h>
 
 int ledValues[3] = {0, 0, 0};
-unsigned long lastPublish;
-int msgCount;
+boolean firstSendDone = false;
 StaticJsonBuffer<1000> jsonBuffer;
 
 // AWS IOT Config
@@ -42,12 +41,21 @@ void setup() {
   wiFiClient.setClientRSACert(&client_crt, &client_key);
   wiFiClient.setTrustAnchors(&rootCert);
 
-  // API Server
+  // PubSubClient buffer
+  pubSubClient.setBufferSize(512);
   pulseLeds(false, true, true);
 }
 
 void loop() {
   pubSubCheckConnect();
+
+  // Get shadow state from AWS IOT
+  if (!firstSendDone){
+      boolean result = pubSubClient.publish("$aws/things/OnAir001/shadow/get", "");
+      Serial.print("Requested Shadow State from AWS...");   
+      Serial.println(result ? "SUCCESS" : "FAILURE"); 
+      firstSendDone = true;
+  }
 }
 
 
@@ -63,6 +71,7 @@ void msgReceived(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println();
 
+  Serial.println(message);
   JsonObject& awsIotPayload = jsonBuffer.parseObject(message);
   int red = awsIotPayload["state"]["desired"]["red"].as<int>();
   int green = awsIotPayload["state"]["desired"]["green"].as<int>();
@@ -77,6 +86,7 @@ void msgReceived(char* topic, byte* payload, unsigned int length) {
   Serial.println(")");
 
   setLeds(red, green, blue);
+  jsonBuffer.clear();
 }
 
 void pubSubCheckConnect() {
@@ -97,11 +107,6 @@ void pubSubCheckConnect() {
     Serial.println(result ? "SUCCESS" : "FAILURE");
 
     pulseLeds(true, true, true);
-
-    // Get shadow state from AWS IOT
-    result = pubSubClient.publish("$aws/things/OnAir001/shadow/get", "");
-    Serial.print("Requested Shadow State from AWS...");   
-    Serial.println(result ? "SUCCESS" : "FAILURE"); 
   }
   pubSubClient.loop();
 }
