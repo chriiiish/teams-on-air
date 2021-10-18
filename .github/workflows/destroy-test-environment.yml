@@ -1,0 +1,49 @@
+name: Test Environment - Destroy
+
+on:
+  pull_request:
+    types: [ closed ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  destroy-environment:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infrastructure
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      
+      - name: Install Packages
+        run: npm install
+        
+      - name: Transpile into Javascript
+        run: npm run build
+        
+      - name: Run Unit Tests
+        run: npm run test
+        
+      - name: Destroy test environment
+        id: destroy
+        run: |
+          export BRANCH_NAME=${GITHUB_HEAD_REF##*/}
+          echo "::set-output name=BRANCH_NAME::$BRANCH_NAME"
+          npx cdk destroy --force
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: Destroyed test environment on PR Close (${{ steps.destroy.outputs.BRANCH_NAME }}.funqr.cjl.nz)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
