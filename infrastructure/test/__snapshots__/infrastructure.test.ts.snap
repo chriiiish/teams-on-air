@@ -1814,7 +1814,7 @@ Object {
     },
     "iotthing": Object {
       "Properties": Object {
-        "ThingName": "On-Air-Light",
+        "ThingName": "Julie",
       },
       "Type": "AWS::IoT::Thing",
     },

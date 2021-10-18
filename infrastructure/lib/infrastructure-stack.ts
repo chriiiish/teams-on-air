@@ -86,7 +86,7 @@ export class InfrastructureStack extends cdk.Stack {
     });
 
     const IOT_THING = new iot.CfnThing(this, 'iot-thing', {
-      thingName: 'On-Air-Light'
+      thingName: 'Julie'
     });
 
     const APIGATEWAY_IOT = new apigatewayiot.ApiGatewayToIot(this, 'ApiGateway', {
