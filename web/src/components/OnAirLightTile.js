@@ -2,6 +2,7 @@ import './OnAirLightTile.css';
 import React from 'react';
 import { getBoardStatus, setLedBoardColour } from '../helpers/LedBoardHelpers';
 import monitoringImage from '../assets/monitoring.gif';
+import { connectWebSocket, disconnectWebSocket } from '../helpers/WebSocketHelper';
 
 class OnAirLightTile extends React.Component{
 
@@ -10,11 +11,14 @@ class OnAirLightTile extends React.Component{
         this.state = {
             boardConnected: false,
             connectionInProgress: false,
-            deviceName: ''
+            deviceName: '',
+            socket: undefined,
+            socketPingInterval: undefined
         };
         this.testBoardConnection = this.testBoardConnection.bind(this);
         this.deviceNameUpdated = this.deviceNameUpdated.bind(this);
         this.disconnectBoard = this.disconnectBoard.bind(this);
+        this.sendSocket = this.sendSocket.bind(this);
     }
 
     componentDidMount() {
@@ -37,6 +41,11 @@ class OnAirLightTile extends React.Component{
             this.props.updateBoardDeviceName(this.state.deviceName);
             localStorage.setItem('deviceNamePreviousValue', this.state.deviceName);
         }
+
+        const socket = connectWebSocket();
+        const interval = setInterval(this.sendSocket, 2000);
+        this.setState({ socket: socket, socketPingInterval: interval });
+
     }
 
     disconnectBoard(event){
@@ -44,6 +53,14 @@ class OnAirLightTile extends React.Component{
         setLedBoardColour(this.state.deviceName, 0, 0, 0);
         this.setState({ boardConnected: false });
         this.props.updateBoardDeviceName(undefined);
+
+        clearInterval(this.state.socketPingInterval);
+        disconnectWebSocket(this.state.socket);
+        this.setState({socket: undefined, socketPingInterval: undefined})
+    }
+
+    sendSocket(){
+        this.state.socket.send("Keep Alive");
     }
 
     render() {
