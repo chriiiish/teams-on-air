@@ -37,6 +37,14 @@ jobs:
       - name: Install AWSCLI
         run: sudo apt-get update && sudo apt-get install -y awscli
       
+      - name: Configure for environment
+        run: |
+          BRANCH_NAME=${GITHUB_REF##*/}
+          if [ "$BRANCH_NAME" == "main" ]]; then
+            sed -i -e "s|http://localhost:3000|https://on-air.cjl.nz|g" web/src/helpers/MsalHelpers.js;
+          else
+            sed -i -e "s|http://localhost:3000|https://$BRANCH_NAME.on-air.cjl.nz|g" web/src/helpers/MsalHelpers.js;
+          fi;
       - name: Install Packages
         run: npm install
         
