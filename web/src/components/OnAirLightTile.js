@@ -1,6 +1,6 @@
 import './OnAirLightTile.css';
 import React from 'react';
-import { getBoardStatus } from '../helpers/LedBoardHelpers';
+import { getBoardStatus, setLedBoardColour } from '../helpers/LedBoardHelpers';
 
 class OnAirLightTile extends React.Component{
 
@@ -38,6 +38,7 @@ class OnAirLightTile extends React.Component{
 
     disconnectBoard(event){
         event.preventDefault();
+        setLedBoardColour(this.state.ipAddress, 0, 0, 0);
         this.setState({ boardConnected: false });
     }
 
