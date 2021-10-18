@@ -36,6 +36,7 @@ class OnAirLightTile extends React.Component{
         if (status) { 
             this.props.updateBoardDeviceName(this.state.deviceName);
             localStorage.setItem('deviceNamePreviousValue', this.state.deviceName);
+            window.userInfoComponent.resetLedBoardHistory();
         }
     }
 

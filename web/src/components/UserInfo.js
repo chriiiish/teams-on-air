@@ -27,6 +27,9 @@ class UserInfo extends React.Component{
         this.getUserPresenceData = this.getUserPresenceData.bind(this);
         this.setPresenceInformation = this.setPresenceInformation.bind(this);
         this.noMessageReceived = this.noMessageReceived.bind(this);
+        this.resetLedBoardHistory = this.resetLedBoardHistory.bind(this);
+
+        window.userInfoComponent = this;
     }
 
     componentDidMount(){
@@ -36,6 +39,13 @@ class UserInfo extends React.Component{
 
     getUserPresenceData(){
         callMsGraph(this.props.msalContext, graphConfig.presenceEndpoint, this.setPresenceInformation);
+    }
+
+    resetLedBoardHistory(){
+        this.setState({
+            previousActivity: undefined,
+            previousAvailability: undefined
+        });
     }
 
     setPresenceInformation(response){
@@ -48,7 +58,7 @@ class UserInfo extends React.Component{
         clearTimeout(this.problemTimeout);
         this.problemTimeout = setInterval(this.noMessageReceived, 4000);
 
-        if(this.props.boardIpAddress){
+        if(this.props.boardDeviceName){
             if (this.state.currentActivity !== this.state.previousActivity || 
                 this.state.currentAvailability !== this.state.previousAvailability){
 
@@ -59,17 +69,17 @@ class UserInfo extends React.Component{
 
                 switch(this.state.currentAvailability){
                     case 'Busy':
-                        if (this.state.currentActivity === 'InACall') setLedBoardColour(this.props.boardIpAddress, 255, 0, 0);
-                        else setLedBoardColour(this.props.boardIpAddress, 0, 255, 0);
+                        if (this.state.currentActivity === 'InACall') setLedBoardColour(this.props.boardDeviceName, 255, 0, 0);
+                        else setLedBoardColour(this.props.boardDeviceName, 0, 255, 0);
                         break;
                     case 'Available':
-                        setLedBoardColour(this.props.boardIpAddress, 0, 255, 0);
+                        setLedBoardColour(this.props.boardDeviceName, 0, 255, 0);
                         break;
                     case 'Offline':
-                        setLedBoardColour(this.props.boardIpAddress, 0, 0, 0)
+                        setLedBoardColour(this.props.boardDeviceName, 0, 0, 0)
                         break;
                     default:
-                        setLedBoardColour(this.props.boardIpAddress, 0, 255, 0);
+                        setLedBoardColour(this.props.boardDeviceName, 0, 255, 0);
                         break;
                 }
             }

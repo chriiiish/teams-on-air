@@ -4,13 +4,14 @@ import { withMsal } from '@azure/msal-react';
 
 import UserInfo from './UserInfo';
 import OnAirLightTile from './OnAirLightTile';
+import { setLedBoardColour } from '../helpers/LedBoardHelpers';
 
 class MicrosoftConnectTile extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            boardIpAddress: undefined
+            boardDeviceName: undefined
         };
 
         this.updateBoardDeviceName = this.updateBoardDeviceName.bind(this);
@@ -23,9 +24,9 @@ class MicrosoftConnectTile extends React.Component{
         window.location.reload();
     }
 
-    updateBoardDeviceName(ipAddress) {
+    updateBoardDeviceName(deviceName) {
         this.setState({
-            boardIpAddress: ipAddress
+            deviceName: deviceName
         });
     }
 
@@ -42,7 +43,7 @@ class MicrosoftConnectTile extends React.Component{
 
                     { msalAccounts.length > 0 &&
                         <div>
-                            <UserInfo user={activeAccount} boardIpAddress={this.state.boardIpAddress} />
+                            <UserInfo user={activeAccount} boardDeviceName={this.state.boardDeviceName} />
                             <button onClick={() => this.logout()}>Disconnect</button>
                         </div>
                     }
