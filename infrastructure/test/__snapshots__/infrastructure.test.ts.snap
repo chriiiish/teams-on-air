@@ -1829,7 +1829,7 @@ Object {
     },
     "iotthing": Object {
       "Properties": Object {
-        "ThingName": "Julie",
+        "ThingName": "OnAir001",
       },
       "Type": "AWS::IoT::Thing",
     },
