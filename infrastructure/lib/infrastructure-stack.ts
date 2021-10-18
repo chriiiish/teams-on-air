@@ -4,6 +4,8 @@ import * as alias from '@aws-cdk/aws-route53-targets';
 import * as cfr from '@aws-cdk/aws-cloudfront';
 import * as certmgr from '@aws-cdk/aws-certificatemanager';
 import * as s3 from '@aws-cdk/aws-s3';
+import * as iot from '@aws-cdk/aws-iot';
+import * as apigatewayiot from '@aws-solutions-constructs/aws-apigateway-iot';
 import { CfnParameter, RemovalPolicy } from '@aws-cdk/core';
 
 export class InfrastructureStack extends cdk.Stack {
@@ -78,6 +80,14 @@ export class InfrastructureStack extends cdk.Stack {
     const OUTPUT_CLOUDFRONT = new cdk.CfnOutput(this, 'CloudFrontDistribution', {
       description: 'The ID of the cloudfront distribution',
       value: DISTRIBUTION.distributionId
+    });
+
+    const IOT_THING = new iot.CfnThing(this, 'iot-thing', {
+      thingName: 'On-Air-Light'
+    });
+
+    const APIGATEWAY_IOT = new apigatewayiot.ApiGatewayToIot(this, 'ApiGateway', {
+      iotEndpoint: 'on-air'
     });
   }
 }
