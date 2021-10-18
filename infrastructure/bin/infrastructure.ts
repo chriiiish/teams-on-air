@@ -5,7 +5,7 @@ import { InfrastructureStack } from '../lib/infrastructure-stack';
 import { Tags } from '@aws-cdk/core';
 
 const app = new cdk.App();
-const stackName = process.env.BRANCH_NAME ? `TeamsOnAir-${process.env.BRANCH_NAME}` : '{{PROJ_SAFE_NAME}}-main';
+const stackName = process.env.BRANCH_NAME ? `TeamsOnAir-${process.env.BRANCH_NAME}` : 'TeamsOnAir-main';
 
 const stack = new InfrastructureStack(app, stackName, {
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
@@ -15,4 +15,4 @@ const stack = new InfrastructureStack(app, stackName, {
   }
 });
 
-Tags.of(stack).add('project', 'on-air}}');
+Tags.of(stack).add('project', 'on-air');
