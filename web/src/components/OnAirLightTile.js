@@ -1,6 +1,7 @@
 import './OnAirLightTile.css';
 import React from 'react';
 import { getBoardStatus, setLedBoardColour } from '../helpers/LedBoardHelpers';
+import monitoringImage from '../assets/monitoring.gif';
 
 class OnAirLightTile extends React.Component{
 
@@ -8,6 +9,7 @@ class OnAirLightTile extends React.Component{
         super(props);
         this.state = {
             boardConnected: false,
+            connectionInProgress: false,
             ipAddress: ''
         };
         this.testBoardConnection = this.testBoardConnection.bind(this);
@@ -25,10 +27,11 @@ class OnAirLightTile extends React.Component{
     }
 
     async testBoardConnection(event) {
+        this.setState({connectionInProgress: true});
         event.preventDefault();
         // Get board status
         const status = await getBoardStatus(this.state.ipAddress);
-        this.setState({ boardConnected: status });
+        this.setState({ boardConnected: status, connectionInProgress: false });
 
         if (status) { 
             this.props.updateBoardIpAddress(this.state.ipAddress);
@@ -63,7 +66,8 @@ class OnAirLightTile extends React.Component{
                             <form>
                                 <label htmlFor='ip-address' >Enter IP address of the On-Air light: </label>
                                 <input value={this.state.ipAddress} onChange={this.ipAddressUpdated} type='text' name='ip-address' id='ip-address' />
-                                <button onClick={this.testBoardConnection}>Test Connection</button>
+                                <button onClick={this.testBoardConnection} className={this.state.connectionInProgress ? 'hidden' : ''}>Test Connection</button>
+                                <img src={monitoringImage} alt='Attempting to connect' className={this.state.connectionInProgress ? 'loading' : 'hidden'} /> 
                             </form>
                         }   
                     </div>

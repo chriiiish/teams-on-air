@@ -5,7 +5,6 @@
     border-radius: var(--corner-radius);
     width: 40em;
     height: 5em;
-    margin-top: var(--padding-top);
     background: var(--focus-background);
     line-height: 5em;
 }
@@ -18,4 +17,13 @@
 .faded{
     color: var(--gray);
     border-color: var(--gray);
+}
+
+.hidden{
+    display:none;
+}
+
+img.loading{
+    width: 1.5em;
+    vertical-align: middle;
 }
