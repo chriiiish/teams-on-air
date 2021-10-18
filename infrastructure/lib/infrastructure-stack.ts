@@ -89,6 +89,19 @@ export class InfrastructureStack extends cdk.Stack {
       thingName: 'Julie'
     });
 
+    const IOT_POLICY = new iot.CfnPolicy(this, 'iot-policy', {
+      policyDocument: {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "iot:*",
+            "Resource": "*"
+          }
+        ]
+      }
+    });
+
     const APIGATEWAY_IOT = new apigatewayiot.ApiGatewayToIot(this, 'ApiGateway', {
       iotEndpoint: 'a2rtq0babjncfg-ats', // This value can be found in IOT Core console > Settings
       apiGatewayCreateApiKey: true,
