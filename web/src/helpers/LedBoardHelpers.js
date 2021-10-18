@@ -6,7 +6,7 @@ export async function setLedBoardColour(deviceName, red, green, blue) {
     const options = {
         method: "POST",
         signal: signal,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'x-api-key' : 'ML28G8cQJsCwellSIZfk31ixUVYNlvu1uHi8c7lb' },
         body: JSON.stringify({ 
             state: {
                 desired: {
