@@ -48,15 +48,21 @@ void setLedsWeb() {
 
   char responseJson[200];
   sprintf(responseJson, "{\"red\": %d, \"green\": %d, \"blue\": %d}", red, green, blue);
+  server.sendHeader("Access-Control-Allow-Origin", "*");
   server.send(200, "application/json", responseJson);
 }
  
 void restServerRouting() {
   server.on("/", HTTP_GET, []() {
+      server.sendHeader("Access-Control-Allow-Origin", "*");
       server.send(200, F("text/html"),
           F("Teams On-Air Light API"));
   });
   server.on(F("/leds"), HTTP_POST, setLedsWeb);
+  server.on(F("/alive"), HTTP_GET, []() {
+    server.sendHeader("Access-Control-Allow-Origin", "*");
+    server.send(200, F("application/json"), F("{\"status\":\"online\"}"));
+  });
 }
 
 
