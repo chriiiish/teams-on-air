@@ -1812,6 +1812,21 @@ Object {
       },
       "Type": "AWS::CertificateManager::Certificate",
     },
+    "iotpolicy": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "iot:*",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IoT::Policy",
+    },
     "iotthing": Object {
       "Properties": Object {
         "ThingName": "Julie",
