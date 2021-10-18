@@ -56,8 +56,8 @@ jobs:
         run: |
           SHA_SHORT=$(echo $GITHUB_SHA | head -c 7)
           BRANCH_NAME=${GITHUB_REF##*/}
-          S3_BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name FunQr-$BRANCH_NAME --output text --query "Stacks[*].Outputs[?OutputKey == 'S3Bucket'].OutputValue")
-          DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name FunQr-$BRANCH_NAME --output text --query "Stacks[*].Outputs[?OutputKey == 'CloudFrontDistribution'].OutputValue")
+          S3_BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name TeamsOnAir-$BRANCH_NAME --output text --query "Stacks[*].Outputs[?OutputKey == 'S3Bucket'].OutputValue")
+          DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name TeamsOnAir-$BRANCH_NAME --output text --query "Stacks[*].Outputs[?OutputKey == 'CloudFrontDistribution'].OutputValue")
           aws s3 sync . s3://$S3_BUCKET_NAME/$SHA_SHORT/
           aws s3 rm s3://$S3_BUCKET_NAME/live/
           aws s3 sync . s3://$S3_BUCKET_NAME/live/
