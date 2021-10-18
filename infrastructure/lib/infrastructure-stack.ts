@@ -91,14 +91,23 @@ export class InfrastructureStack extends cdk.Stack {
 
     const APIGATEWAY_IOT = new apigatewayiot.ApiGatewayToIot(this, 'ApiGateway', {
       iotEndpoint: 'on-air',
+      apiGatewayCreateApiKey: true,
       apiGatewayProps: {
         domainName: {
           domainName: `api.${DOMAIN_NAME}`,
           certificate: CERTIFICATE
         },
-        restApiName: `On-Air-${BRANCH_NAME}`,
+        restApiName: `On-Air`,
         description: 'Teams On-Air light API for communicating to light',
       }
     });
+
+    const DNS_RECORD_API = new r53.CnameRecord(this, 'dns-record-api', {
+      recordName: `api.${SUBDOMAIN_NAME}`,
+      comment: `api.${DOMAIN_NAME} API`,
+      zone: DOMAIN,
+      domainName: APIGATEWAY_IOT.apiGateway.domainName?.domainNameAliasDomainName ?? ''
+    });
+    
   }
 }
