@@ -96,7 +96,7 @@ export class InfrastructureStack extends cdk.Stack {
           {
             "Effect": "Allow",
             "Action": "iot:*",
-            "Resource": "arn:aws:iot:region:account:topic/$aws/things/Julie/*"
+            "Resource": "arn:aws:iot:region:account:topic/$aws/things/OnAir001/*"
           }
         ]
       }

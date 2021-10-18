@@ -1819,7 +1819,7 @@ Object {
             Object {
               "Action": "iot:*",
               "Effect": "Allow",
-              "Resource": "arn:aws:iot:region:account:topic/$aws/things/Julie/*",
+              "Resource": "arn:aws:iot:region:account:topic/$aws/things/OnAir001/*",
             },
           ],
           "Version": "2012-10-17",
