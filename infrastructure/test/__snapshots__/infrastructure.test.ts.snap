@@ -170,16 +170,56 @@ Object {
         "BinaryMediaTypes": Array [
           "application/octet-stream",
         ],
+        "Description": "Teams On-Air light API for communicating to light",
         "EndpointConfiguration": Object {
           "Types": Array [
             "EDGE",
           ],
         },
-        "Name": "RestApi",
+        "Name": "On-Air-TestInfrastructureStack/branch-name",
       },
       "Type": "AWS::ApiGateway::RestApi",
     },
-    "ApiGatewayRestApiDeploymentF3960560578e857df9be8a3443d2bf30dc854e42": Object {
+    "ApiGatewayRestApiCustomDomainBB2293BF": Object {
+      "Properties": Object {
+        "DomainName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "api.",
+              Object {
+                "Ref": "branchname",
+              },
+              "on-air.cjl.nz",
+            ],
+          ],
+        },
+        "EndpointConfiguration": Object {
+          "Types": Array [
+            "REGIONAL",
+          ],
+        },
+        "RegionalCertificateArn": Object {
+          "Ref": "domaincertificateA050E5BB",
+        },
+      },
+      "Type": "AWS::ApiGateway::DomainName",
+    },
+    "ApiGatewayRestApiCustomDomainMapTestInfrastructureStackApiGatewayRestApi2E9493DC34850AB9": Object {
+      "Properties": Object {
+        "DomainName": Object {
+          "Ref": "ApiGatewayRestApiCustomDomainBB2293BF",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+        "Stage": Object {
+          "Ref": "ApiGatewayRestApiDeploymentStageprod083524AB",
+        },
+      },
+      "Type": "AWS::ApiGateway::BasePathMapping",
+    },
+    "ApiGatewayRestApiDeploymentF396056035fa2ee126b98c7556100e179f676707": Object {
       "DependsOn": Array [
         "ApiGatewayawsapigatewayiotreqvalF92AA473",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7POST499F1FC0",
@@ -233,7 +273,7 @@ Object {
           "Format": "{\\"requestId\\":\\"$context.requestId\\",\\"ip\\":\\"$context.identity.sourceIp\\",\\"user\\":\\"$context.identity.user\\",\\"caller\\":\\"$context.identity.caller\\",\\"requestTime\\":\\"$context.requestTime\\",\\"httpMethod\\":\\"$context.httpMethod\\",\\"resourcePath\\":\\"$context.resourcePath\\",\\"status\\":\\"$context.status\\",\\"protocol\\":\\"$context.protocol\\",\\"responseLength\\":\\"$context.responseLength\\"}",
         },
         "DeploymentId": Object {
-          "Ref": "ApiGatewayRestApiDeploymentF3960560578e857df9be8a3443d2bf30dc854e42",
+          "Ref": "ApiGatewayRestApiDeploymentF396056035fa2ee126b98c7556100e179f676707",
         },
         "MethodSettings": Array [
           Object {
@@ -1570,6 +1610,35 @@ Object {
               ],
             },
             "HostedZoneId": "Z0909161DL7J28OF5XCC",
+          },
+          Object {
+            "DomainName": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "api.",
+                  Object {
+                    "Ref": "branchname",
+                  },
+                  "on-air.cjl.nz",
+                ],
+              ],
+            },
+            "HostedZoneId": "Z0909161DL7J28OF5XCC",
+          },
+        ],
+        "SubjectAlternativeNames": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "api.",
+                Object {
+                  "Ref": "branchname",
+                },
+                "on-air.cjl.nz",
+              ],
+            ],
           },
         ],
         "ValidationMethod": "DNS",
