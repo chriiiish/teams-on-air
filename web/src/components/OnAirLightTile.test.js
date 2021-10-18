@@ -52,7 +52,7 @@ describe('Given the user is authenticated', () => {
             const label = screen.getByText(/enter ip address of the on-air light/i);
             expect(label).toBeInTheDocument();
             
-            const inputBox = screen.getByRole('textbox', { name: 'Enter IP address of the On-Air light: '});
+            const inputBox = screen.getByRole('textbox', { name: 'Enter IP address of the On-Air light:'});
             expect(inputBox).toBeInTheDocument();
 
             const submitButton = screen.getByText(/test connection/i);

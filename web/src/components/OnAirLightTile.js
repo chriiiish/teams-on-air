@@ -16,7 +16,7 @@ class OnAirLightTile extends React.Component{
     }
 
     componentDidMount() {
-        const lastIpAddress = localStorage.getItem('ipAddressPreviousValue');
+        const lastIpAddress = localStorage.getItem('ipAddressPreviousValue') ?? '';
         this.setState({ ipAddress: lastIpAddress });
     }
 
