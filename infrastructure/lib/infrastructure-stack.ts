@@ -90,7 +90,7 @@ export class InfrastructureStack extends cdk.Stack {
     });
 
     const APIGATEWAY_IOT = new apigatewayiot.ApiGatewayToIot(this, 'ApiGateway', {
-      iotEndpoint: 'on-air',
+      iotEndpoint: 'a2rtq0babjncfg-ats', // This value can be found in IOT Core console > Settings
       apiGatewayCreateApiKey: true,
       apiGatewayProps: {
         domainName: {

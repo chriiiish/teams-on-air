@@ -235,7 +235,7 @@ Object {
       },
       "Type": "AWS::ApiGateway::BasePathMapping",
     },
-    "ApiGatewayRestApiDeploymentF3960560decf3a570c5985aca3dc74bb4adea83a": Object {
+    "ApiGatewayRestApiDeploymentF3960560302a6c2d98aace6253f59cc33f7bc5d6": Object {
       "DependsOn": Array [
         "ApiGatewayawsapigatewayiotreqvalF92AA473",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7POST499F1FC0",
@@ -289,7 +289,7 @@ Object {
           "Format": "{\\"requestId\\":\\"$context.requestId\\",\\"ip\\":\\"$context.identity.sourceIp\\",\\"user\\":\\"$context.identity.user\\",\\"caller\\":\\"$context.identity.caller\\",\\"requestTime\\":\\"$context.requestTime\\",\\"httpMethod\\":\\"$context.httpMethod\\",\\"resourcePath\\":\\"$context.resourcePath\\",\\"status\\":\\"$context.status\\",\\"protocol\\":\\"$context.protocol\\",\\"responseLength\\":\\"$context.responseLength\\"}",
         },
         "DeploymentId": Object {
-          "Ref": "ApiGatewayRestApiDeploymentF3960560decf3a570c5985aca3dc74bb4adea83a",
+          "Ref": "ApiGatewayRestApiDeploymentF3960560302a6c2d98aace6253f59cc33f7bc5d6",
         },
         "MethodSettings": Array [
           Object {
@@ -428,7 +428,7 @@ Object {
                 Object {
                   "Ref": "AWS::Region",
                 },
-                ":on-air.iotdata:path/topics/{topic-level-1}",
+                ":a2rtq0babjncfg-ats.iotdata:path/topics/{topic-level-1}",
               ],
             ],
           },
@@ -538,7 +538,7 @@ Object {
                 Object {
                   "Ref": "AWS::Region",
                 },
-                ":on-air.iotdata:path/topics/{topic-level-1}/{topic-level-2}",
+                ":a2rtq0babjncfg-ats.iotdata:path/topics/{topic-level-1}/{topic-level-2}",
               ],
             ],
           },
@@ -650,7 +650,7 @@ Object {
                 Object {
                   "Ref": "AWS::Region",
                 },
-                ":on-air.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}",
+                ":a2rtq0babjncfg-ats.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}",
               ],
             ],
           },
@@ -764,7 +764,7 @@ Object {
                 Object {
                   "Ref": "AWS::Region",
                 },
-                ":on-air.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}/{topic-level-4}",
+                ":a2rtq0babjncfg-ats.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}/{topic-level-4}",
               ],
             ],
           },
@@ -880,7 +880,7 @@ Object {
                 Object {
                   "Ref": "AWS::Region",
                 },
-                ":on-air.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}/{topic-level-4}/{topic-level-5}",
+                ":a2rtq0babjncfg-ats.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}/{topic-level-4}/{topic-level-5}",
               ],
             ],
           },
@@ -998,7 +998,7 @@ Object {
                 Object {
                   "Ref": "AWS::Region",
                 },
-                ":on-air.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}/{topic-level-4}/{topic-level-5}/{topic-level-6}",
+                ":a2rtq0babjncfg-ats.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}/{topic-level-4}/{topic-level-5}/{topic-level-6}",
               ],
             ],
           },
@@ -1118,7 +1118,7 @@ Object {
                 Object {
                   "Ref": "AWS::Region",
                 },
-                ":on-air.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}/{topic-level-4}/{topic-level-5}/{topic-level-6}/{topic-level-7}",
+                ":a2rtq0babjncfg-ats.iotdata:path/topics/{topic-level-1}/{topic-level-2}/{topic-level-3}/{topic-level-4}/{topic-level-5}/{topic-level-6}/{topic-level-7}",
               ],
             ],
           },
@@ -1248,7 +1248,7 @@ Object {
                 Object {
                   "Ref": "AWS::Region",
                 },
-                ":on-air.iotdata:path/things/{thingName}/shadow",
+                ":a2rtq0babjncfg-ats.iotdata:path/things/{thingName}/shadow",
               ],
             ],
           },
@@ -1358,7 +1358,7 @@ Object {
                 Object {
                   "Ref": "AWS::Region",
                 },
-                ":on-air.iotdata:path/things/{thingName}/shadow?name={shadowName}",
+                ":a2rtq0babjncfg-ats.iotdata:path/things/{thingName}/shadow?name={shadowName}",
               ],
             ],
           },
