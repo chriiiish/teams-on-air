@@ -1,26 +1,31 @@
 const timeout = 5000;
 
-export async function setLedBoardColour(ipAddress, red, green, blue) {
+export async function setLedBoardColour(deviceName, red, green, blue) {
     const controller = new AbortController();
     const signal = controller.signal;
     const options = {
         method: "POST",
-        signal: signal
+        signal: signal,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            state: {
+                desired: {
+                    red: red,
+                    green: green,
+                    blue: blue
+                }
+            }
+        })
     };
     setTimeout(() => controller.abort(), timeout);
 
-    return fetch(`http://${ipAddress}/leds?red=${red}&green=${green}&blue=${blue}`, options)
+    const domainName = (window.location.hostname === "localhost:3000") ? 'on-air.cjl.nz' : window.location.hostname
+
+    return fetch(`https://api.${domainName}/shadow/${deviceName}`, options)
         .then(response => response.json())
         .catch(error => console.log(error));
 };
 
-export function getBoardStatus(ipAddress) {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    setTimeout(() => controller.abort(), timeout);
-
-    return fetch(`http://${ipAddress}/alive`, { method: "GET", signal: signal })
-        .then((response) => response.json())
-        .then((responseJson) => responseJson.status === 'online')
-        .catch((error) => false);
+export function getBoardStatus(deviceName) {
+    return setLedBoardColour(deviceName, 255, 255, 255).then((response) => true).catch((error) => false);
 }

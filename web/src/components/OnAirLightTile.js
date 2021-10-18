@@ -10,38 +10,38 @@ class OnAirLightTile extends React.Component{
         this.state = {
             boardConnected: false,
             connectionInProgress: false,
-            ipAddress: ''
+            deviceName: ''
         };
         this.testBoardConnection = this.testBoardConnection.bind(this);
-        this.ipAddressUpdated = this.ipAddressUpdated.bind(this);
+        this.deviceNameUpdated = this.deviceNameUpdated.bind(this);
         this.disconnectBoard = this.disconnectBoard.bind(this);
     }
 
     componentDidMount() {
-        const lastIpAddress = localStorage.getItem('ipAddressPreviousValue') ?? '';
-        this.setState({ ipAddress: lastIpAddress });
+        const lastdeviceName = localStorage.getItem('deviceNamePreviousValue') ?? '';
+        this.setState({ deviceName: lastdeviceName });
     }
 
-    ipAddressUpdated(event){
-        this.setState({ ipAddress: event.target.value });
+    deviceNameUpdated(event){
+        this.setState({ deviceName: event.target.value });
     }
 
     async testBoardConnection(event) {
         this.setState({connectionInProgress: true});
         event.preventDefault();
         // Get board status
-        const status = await getBoardStatus(this.state.ipAddress);
+        const status = await getBoardStatus(this.state.deviceName);
         this.setState({ boardConnected: status, connectionInProgress: false });
 
         if (status) { 
-            this.props.updateBoardIpAddress(this.state.ipAddress);
-            localStorage.setItem('ipAddressPreviousValue', this.state.ipAddress);
+            this.props.updateBoardDeviceName(this.state.deviceName);
+            localStorage.setItem('deviceNamePreviousValue', this.state.deviceName);
         }
     }
 
     disconnectBoard(event){
         event.preventDefault();
-        setLedBoardColour(this.state.ipAddress, 0, 0, 0);
+        setLedBoardColour(this.state.deviceName, 0, 0, 0);
         this.setState({ boardConnected: false });
     }
 
@@ -58,14 +58,14 @@ class OnAirLightTile extends React.Component{
                     <div>
                         { this.state.boardConnected &&
                             <div>
-                                Connected to light at {this.state.ipAddress} <button onClick={this.disconnectBoard}>Disconnect</button>
+                                Connected to light '{this.state.deviceName}'' <button onClick={this.disconnectBoard}>Disconnect</button>
                             </div>
                         
                         }
                         { !this.state.boardConnected &&
                             <form>
-                                <label htmlFor='ip-address' >Enter IP address of the On-Air light: </label>
-                                <input value={this.state.ipAddress} onChange={this.ipAddressUpdated} type='text' name='ip-address' id='ip-address' />
+                                <label htmlFor='device-name' >Enter Device Name of the On-Air light: </label>
+                                <input value={this.state.deviceName} onChange={this.deviceNameUpdated} type='text' name='device-name' id='device-name' />
                                 <button onClick={this.testBoardConnection} className={this.state.connectionInProgress ? 'hidden' : ''}>Test Connection</button>
                                 <img src={monitoringImage} alt='Attempting to connect' className={this.state.connectionInProgress ? 'loading' : 'hidden'} /> 
                             </form>

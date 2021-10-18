@@ -13,7 +13,7 @@ class MicrosoftConnectTile extends React.Component{
             boardIpAddress: undefined
         };
 
-        this.updateBoardIpAddress = this.updateBoardIpAddress.bind(this);
+        this.updateBoardDeviceName = this.updateBoardDeviceName.bind(this);
     }
 
     login = () => this.props.msalContext.instance.loginRedirect();
@@ -23,7 +23,7 @@ class MicrosoftConnectTile extends React.Component{
         window.location.reload();
     }
 
-    updateBoardIpAddress(ipAddress) {
+    updateBoardDeviceName(ipAddress) {
         this.setState({
             boardIpAddress: ipAddress
         });
@@ -48,7 +48,7 @@ class MicrosoftConnectTile extends React.Component{
                     }
                 </div>
                 <div className={activeAccount == null ? 'faded' : 'active'}>⬇</div>
-                <OnAirLightTile authenticatedWithMicrosoft={activeAccount != null} updateBoardIpAddress={this.updateBoardIpAddress}/>
+                <OnAirLightTile authenticatedWithMicrosoft={activeAccount != null} updateBoardDeviceName={this.updateBoardDeviceName}/>
           </div>
         );
     }
