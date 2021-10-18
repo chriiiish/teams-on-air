@@ -235,7 +235,7 @@ Object {
       },
       "Type": "AWS::ApiGateway::BasePathMapping",
     },
-    "ApiGatewayRestApiDeploymentF3960560b040f5b17a59b5e439ffdb295b8567f5": Object {
+    "ApiGatewayRestApiDeploymentF39605607fbddd60eaafd33c616b44c856b67a9c": Object {
       "DependsOn": Array [
         "ApiGatewayawsapigatewayiotreqvalF92AA473",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7OPTIONS028921B3",
@@ -301,7 +301,7 @@ Object {
           "Format": "{\\"requestId\\":\\"$context.requestId\\",\\"ip\\":\\"$context.identity.sourceIp\\",\\"user\\":\\"$context.identity.user\\",\\"caller\\":\\"$context.identity.caller\\",\\"requestTime\\":\\"$context.requestTime\\",\\"httpMethod\\":\\"$context.httpMethod\\",\\"resourcePath\\":\\"$context.resourcePath\\",\\"status\\":\\"$context.status\\",\\"protocol\\":\\"$context.protocol\\",\\"responseLength\\":\\"$context.responseLength\\"}",
         },
         "DeploymentId": Object {
-          "Ref": "ApiGatewayRestApiDeploymentF3960560b040f5b17a59b5e439ffdb295b8567f5",
+          "Ref": "ApiGatewayRestApiDeploymentF39605607fbddd60eaafd33c616b44c856b67a9c",
         },
         "MethodSettings": Array [
           Object {
@@ -334,7 +334,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -433,7 +433,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -498,7 +498,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -660,7 +660,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -824,7 +824,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -990,7 +990,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -1158,7 +1158,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -1328,7 +1328,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -1500,7 +1500,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -1677,7 +1677,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -1742,7 +1742,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -1904,7 +1904,7 @@ Object {
                   "Fn::Join": Array [
                     "",
                     Array [
-                      "'",
+                      "'https://",
                       Object {
                         "Ref": "branchname",
                       },
@@ -2470,7 +2470,13 @@ Object {
             Object {
               "Action": "iot:*",
               "Effect": "Allow",
-              "Resource": "arn:aws:iot:undefined:undefined:topic/$aws/things/OnAir001/*",
+              "Resource": Array [
+                "arn:aws:iot:undefined:undefined:client/TestInfrastructureStack/iot-thing [AWS::IoT::Thing]",
+                "arn:aws:iot:undefined:undefined:thing/OnAir001",
+                "arn:aws:iot:undefined:undefined:topicfilter/OnAir001/*",
+                "arn:aws:iot:undefined:undefined:topicfilter/$aws/things/OnAir001/*",
+                "arn:aws:iot:undefined:undefined:topic/$aws/things/OnAir001/*",
+              ],
             },
           ],
           "Version": "2012-10-17",

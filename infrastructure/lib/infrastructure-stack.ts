@@ -96,7 +96,13 @@ export class InfrastructureStack extends cdk.Stack {
           {
             "Effect": "Allow",
             "Action": "iot:*",
-            "Resource": `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:topic/$aws/things/OnAir001/*`
+            "Resource": [
+              `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:client/${IOT_THING}`,
+              `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:thing/${IOT_THING.thingName}`,
+              `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:topicfilter/${IOT_THING.thingName}/*`,
+              `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:topicfilter/$aws/things/${IOT_THING.thingName}/*`,
+              `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:topic/$aws/things/${IOT_THING.thingName}/*`
+            ]
           }
         ]
       }
@@ -114,7 +120,7 @@ export class InfrastructureStack extends cdk.Stack {
         description: 'Teams On-Air light API for communicating to light',
         defaultCorsPreflightOptions: {
           allowOrigins: [
-            DOMAIN_NAME
+            `https://${DOMAIN_NAME}`
           ]
         }
       }
