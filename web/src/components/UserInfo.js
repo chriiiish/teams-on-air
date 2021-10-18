@@ -49,8 +49,6 @@ class UserInfo extends React.Component{
         clearTimeout(this.problemTimeout);
         this.problemTimeout = setInterval(this.noMessageReceived, 4000);
 
-        console.log(`PREVIOUS: ${this.state.previousDeviceName} CURRENT: ${this.props.boardDeviceName}`)
-
         if (this.state.currentActivity !== this.state.previousActivity || 
             this.state.currentAvailability !== this.state.previousAvailability ||
             this.props.boardDeviceName !== this.state.previousDeviceName
