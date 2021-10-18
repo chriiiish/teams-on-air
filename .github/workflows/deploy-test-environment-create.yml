@@ -1,0 +1,104 @@
+name: Test Environment - Create
+
+on:
+  pull_request:
+    types: [ opened ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-environment:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infrastructure
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: Creating a test environment... hold tight!
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      
+      - name: Install Packages
+        run: npm install
+        
+      - name: Transpile into Javascript
+        run: npm run build
+        
+      - name: Run Unit Tests
+        run: npm run test
+        
+      - name: Create test environment
+        run: |
+          export BRANCH_NAME=${GITHUB_HEAD_REF##*/}
+          npx cdk deploy --require-approval never --parameters branchname="$BRANCH_NAME."
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+
+  deploy-web-app-code:
+    runs-on: ubuntu-latest
+    needs: build-environment
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          
+      - name: Install AWSCLI
+        run: sudo apt-get update && sudo apt-get install -y awscli
+      
+      - name: Install Packages
+        run: npm install
+        
+      - name: Transpile into Javascript
+        run: npm run build
+        
+      - name: Run Unit Tests
+        run: npm run test
+
+      - name: Version Application
+        run: | 
+          SHA_SHORT=$(echo $GITHUB_SHA | head -c 7)
+          VERSION_JSON="{ \"SHA_SHORT\": \"$SHA_SHORT\", \"GITHUB_RUN_ID\": \"$GITHUB_RUN_ID\", \"GITHUB_RUN_NUMBER\": \"$GITHUB_RUN_NUMBER\", \"GITHUB_REF\": \"$GITHUB_HEAD_REF\" }"
+          echo $VERSION_JSON > build/version.json
+        
+      - name: Deploy to S3
+        id: deploy
+        run: |
+          SHA_SHORT=$(echo $GITHUB_SHA | head -c 7)
+          export BRANCH_NAME=${GITHUB_HEAD_REF##*/}
+          echo "::set-output name=BRANCH_NAME::$BRANCH_NAME"
+          S3_BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name FunQr-$BRANCH_NAME --output text --query "Stacks[*].Outputs[?OutputKey == 'S3Bucket'].OutputValue")
+          DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name FunQr-$BRANCH_NAME --output text --query "Stacks[*].Outputs[?OutputKey == 'CloudFrontDistribution'].OutputValue")
+          aws s3 rm s3://$S3_BUCKET_NAME/live/
+          aws s3 sync . s3://$S3_BUCKET_NAME/live/
+          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/index.html"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        working-directory: web/build
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: Web app now deployed to test environment ${{ steps.deploy.outputs.BRANCH_NAME }}.funqr.cjl.nz
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
