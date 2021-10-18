@@ -33,7 +33,10 @@ export class InfrastructureStack extends cdk.Stack {
 
     const CERTIFICATE = new certmgr.Certificate(this, 'domain-certificate', {
       domainName: DOMAIN_NAME,
-      validation: certmgr.CertificateValidation.fromDns(DOMAIN)
+      validation: certmgr.CertificateValidation.fromDns(DOMAIN),
+      subjectAlternativeNames: [
+        `api.${DOMAIN_NAME}`
+      ]
     });
 
     const S3_BUCKET = new s3.Bucket(this, 's3-bucket', {
@@ -87,7 +90,15 @@ export class InfrastructureStack extends cdk.Stack {
     });
 
     const APIGATEWAY_IOT = new apigatewayiot.ApiGatewayToIot(this, 'ApiGateway', {
-      iotEndpoint: 'on-air'
+      iotEndpoint: 'on-air',
+      apiGatewayProps: {
+        domainName: {
+          domainName: `api.${DOMAIN_NAME}`,
+          certificate: CERTIFICATE
+        },
+        restApiName: `On-Air-${BRANCH_NAME}`,
+        description: 'Teams On-Air light API for communicating to light',
+      }
     });
   }
 }
