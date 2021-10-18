@@ -1,0 +1,69 @@
+# Deploy the Website to the S3 bucket
+name: Deploy - Website
+
+on:
+  push:
+    branches: [ main ]
+    paths: 
+      - web/**/*
+      - .github/workflows/deploy-website.yml
+  pull_request:
+    branches: [ main ]
+    paths: 
+      - infrastructure/**/*
+      - .github/workflows/deploy-infrastructure.yml
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: web
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          
+      - name: Install AWSCLI
+        run: sudo apt-get update && sudo apt-get install -y awscli
+      
+      - name: Install Packages
+        run: npm install
+        
+      - name: Transpile into Javascript
+        run: npm run build
+        
+      - name: Run Unit Tests
+        run: npm run test
+
+      - name: Version Application
+        run: | 
+          SHA_SHORT=$(echo $GITHUB_SHA | head -c 7)
+          VERSION_JSON="{ \"SHA_SHORT\": \"$SHA_SHORT\", \"GITHUB_RUN_ID\": \"$GITHUB_RUN_ID\", \"GITHUB_RUN_NUMBER\": \"$GITHUB_RUN_NUMBER\", \"GITHUB_REF\": \"$GITHUB_REF\" }"
+          echo $VERSION_JSON > build/version.json
+        
+      - name: Deploy to production
+        run: |
+          SHA_SHORT=$(echo $GITHUB_SHA | head -c 7)
+          BRANCH_NAME=${GITHUB_REF##*/}
+          S3_BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name FunQr-$BRANCH_NAME --output text --query "Stacks[*].Outputs[?OutputKey == 'S3Bucket'].OutputValue")
+          DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name FunQr-$BRANCH_NAME --output text --query "Stacks[*].Outputs[?OutputKey == 'CloudFrontDistribution'].OutputValue")
+          aws s3 sync . s3://$S3_BUCKET_NAME/$SHA_SHORT/
+          aws s3 rm s3://$S3_BUCKET_NAME/live/
+          aws s3 sync . s3://$S3_BUCKET_NAME/live/
+          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/index.html"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+        working-directory: web/build
