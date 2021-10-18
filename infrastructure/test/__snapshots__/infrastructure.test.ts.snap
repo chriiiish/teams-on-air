@@ -235,7 +235,7 @@ Object {
       },
       "Type": "AWS::ApiGateway::BasePathMapping",
     },
-    "ApiGatewayRestApiDeploymentF39605607fbddd60eaafd33c616b44c856b67a9c": Object {
+    "ApiGatewayRestApiDeploymentF3960560991f6ae0ad33541903b077dbb4ec3664": Object {
       "DependsOn": Array [
         "ApiGatewayawsapigatewayiotreqvalF92AA473",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7OPTIONS028921B3",
@@ -301,7 +301,7 @@ Object {
           "Format": "{\\"requestId\\":\\"$context.requestId\\",\\"ip\\":\\"$context.identity.sourceIp\\",\\"user\\":\\"$context.identity.user\\",\\"caller\\":\\"$context.identity.caller\\",\\"requestTime\\":\\"$context.requestTime\\",\\"httpMethod\\":\\"$context.httpMethod\\",\\"resourcePath\\":\\"$context.resourcePath\\",\\"status\\":\\"$context.status\\",\\"protocol\\":\\"$context.protocol\\",\\"responseLength\\":\\"$context.responseLength\\"}",
         },
         "DeploymentId": Object {
-          "Ref": "ApiGatewayRestApiDeploymentF39605607fbddd60eaafd33c616b44c856b67a9c",
+          "Ref": "ApiGatewayRestApiDeploymentF3960560991f6ae0ad33541903b077dbb4ec3664",
         },
         "MethodSettings": Array [
           Object {
@@ -330,19 +330,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -358,7 +346,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -429,19 +416,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -457,7 +432,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -494,19 +468,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -522,7 +484,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -656,19 +617,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -684,7 +633,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -820,19 +768,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -848,7 +784,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -986,19 +921,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -1014,7 +937,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -1154,19 +1076,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -1182,7 +1092,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -1324,19 +1233,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -1352,7 +1249,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -1496,19 +1392,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -1524,7 +1408,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -1673,19 +1556,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -1701,7 +1572,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -1738,19 +1608,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -1766,7 +1624,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
@@ -1900,19 +1757,7 @@ Object {
               "ResponseParameters": Object {
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
-                "method.response.header.Access-Control-Allow-Origin": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "'https://",
-                      Object {
-                        "Ref": "branchname",
-                      },
-                      "on-air.cjl.nz'",
-                    ],
-                  ],
-                },
-                "method.response.header.Vary": "'Origin'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
               },
               "StatusCode": "204",
             },
@@ -1928,7 +1773,6 @@ Object {
               "method.response.header.Access-Control-Allow-Headers": true,
               "method.response.header.Access-Control-Allow-Methods": true,
               "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Vary": true,
             },
             "StatusCode": "204",
           },
