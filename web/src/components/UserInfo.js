@@ -21,15 +21,13 @@ class UserInfo extends React.Component{
             monitoringMessage: 'Connecting...',
             monitoringStatusIcon: monitoringImage,
             previousAvailability: undefined,
-            previousActivity: undefined
+            previousActivity: undefined,
+            previousDeviceName: undefined
         };
 
         this.getUserPresenceData = this.getUserPresenceData.bind(this);
         this.setPresenceInformation = this.setPresenceInformation.bind(this);
         this.noMessageReceived = this.noMessageReceived.bind(this);
-        this.resetLedBoardHistory = this.resetLedBoardHistory.bind(this);
-
-        window.userInfoComponent = this;
     }
 
     componentDidMount(){
@@ -39,13 +37,6 @@ class UserInfo extends React.Component{
 
     getUserPresenceData(){
         callMsGraph(this.props.msalContext, graphConfig.presenceEndpoint, this.setPresenceInformation);
-    }
-
-    resetLedBoardHistory(){
-        this.setState({
-            previousActivity: undefined,
-            previousAvailability: undefined
-        });
     }
 
     setPresenceInformation(response){
@@ -60,11 +51,14 @@ class UserInfo extends React.Component{
 
         if(this.props.boardDeviceName){
             if (this.state.currentActivity !== this.state.previousActivity || 
-                this.state.currentAvailability !== this.state.previousAvailability){
+                this.state.currentAvailability !== this.state.previousAvailability ||
+                this.props.boardDeviceName !== this.state.previousDeviceName
+                ){
 
                 this.setState({
                     previousActivity: this.state.currentActivity,
-                    previousAvailability: this.state.currentAvailability
+                    previousAvailability: this.state.currentAvailability,
+                    previousDeviceName: this.props.boardDeviceName
                 });
 
                 switch(this.state.currentAvailability){

@@ -4,7 +4,6 @@ import { withMsal } from '@azure/msal-react';
 
 import UserInfo from './UserInfo';
 import OnAirLightTile from './OnAirLightTile';
-import { setLedBoardColour } from '../helpers/LedBoardHelpers';
 
 class MicrosoftConnectTile extends React.Component{
 
