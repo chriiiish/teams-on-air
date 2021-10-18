@@ -19,7 +19,7 @@ export async function setLedBoardColour(deviceName, red, green, blue) {
     };
     setTimeout(() => controller.abort(), timeout);
 
-    const domainName = (window.location.hostname === "localhost:3000") ? 'on-air.cjl.nz' : window.location.hostname
+    const domainName = (window.location.hostname === "localhost") ? 'on-air.cjl.nz' : window.location.hostname
 
     return fetch(`https://api.${domainName}/shadow/${deviceName}`, options)
         .then(response => response.json())
