@@ -1,4 +1,3 @@
-import { MsalProvider } from '@azure/msal-react';
 import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -30,7 +29,7 @@ jest.mock('@azure/msal-browser', () => ({
 
 describe('Given this is the users first time', () => {
   describe('When the user views the page', () => {
-            it('Then the connect tile should be displayed', () => {
+            it('Then the microsoft connect tile should be displayed', () => {
               act(() => {
                 render(<App />, container);
               });

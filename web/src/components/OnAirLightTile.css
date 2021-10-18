@@ -1,0 +1,21 @@
+.OnAirLightTile{
+    padding: var(--padding-default);
+    border-top: var(--border-default);
+    border-bottom: var(--border-default);
+    border-radius: var(--corner-radius);
+    width: 40em;
+    height: 5em;
+    margin-top: var(--padding-top);
+    background: var(--focus-background);
+    line-height: 5em;
+}
+
+.OnAirLightActive{
+    border-color: var(--green);
+    line-height: 1.5em;
+}
+
+.faded{
+    color: var(--gray);
+    border-color: var(--gray);
+}

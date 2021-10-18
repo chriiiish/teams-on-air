@@ -19,7 +19,9 @@ class UserInfo extends React.Component{
             currentAvailability: undefined,
             currentActivity: undefined,
             monitoringMessage: 'Connecting...',
-            monitoringStatusIcon: monitoringImage
+            monitoringStatusIcon: monitoringImage,
+            previousAvailability: undefined,
+            previousActivity: undefined
         };
 
         this.getUserPresenceData = this.getUserPresenceData.bind(this);
@@ -46,11 +48,31 @@ class UserInfo extends React.Component{
         clearTimeout(this.problemTimeout);
         this.problemTimeout = setInterval(this.noMessageReceived, 4000);
 
-        if (this.state.currentAvailability == 'Available'){
-            setLedBoardColour(0,255,0);
-        }
-        if (this.state.currentAvailability == 'Busy'){
-            setLedBoardColour(255,0,0);
+        if(this.props.boardIpAddress){
+            if (this.state.currentActivity !== this.state.previousActivity && 
+                this.state.currentAvailability !== this.state.previousAvailability){
+
+                this.setState({
+                    previousActivity: this.state.currentActivity,
+                    previousAvailability: this.state.currentAvailability
+                });
+
+                switch(this.state.currentAvailability){
+                    case 'Busy':
+                        if (this.state.currentActivity === 'InACall') setLedBoardColour(this.props.boardIpAddress, 255, 0, 0);
+                        else setLedBoardColour(this.props.boardIpAddress, 255, 255, 0);
+                        break;
+                    case 'Available':
+                        setLedBoardColour(this.props.boardIpAddress, 0, 255, 0);
+                        break;
+                    case 'Offline':
+                        setLedBoardColour(this.props.boardIpAddress, 0, 0, 0)
+                        break;
+                    default:
+                        setLedBoardColour(this.props.boardIpAddress, 255, 255, 0);
+                        break;
+                }
+            }
         }
 
     }
@@ -67,15 +89,15 @@ class UserInfo extends React.Component{
                     <tbody>
                         <tr><td className="info-label">Name:</td><td><span>{user.name}</span> (<span>{user.username}</span>)</td></tr>
                         <tr><td className="info-label">ID:</td><td><span>{user.localAccountId}</span></td></tr>
-                        <tr><td className="info-label">Current Status:</td><td>{this.state.currentAvailability == undefined ? 'Checking...' : this.state.currentAvailability}</td></tr>
-                        <tr><td className="info-label">Current Activity:</td><td>{this.state.currentActivity == undefined ? 'Checking...' : this.state.currentActivity}</td></tr>
+                        <tr><td className="info-label">Current Status:</td><td>{this.state.currentAvailability === undefined ? 'Checking...' : this.state.currentAvailability}</td></tr>
+                        <tr><td className="info-label">Current Activity:</td><td>{this.state.currentActivity === undefined ? 'Checking...' : this.state.currentActivity}</td></tr>
                     </tbody>
                 </table>
                 <div className="monitoring">
-                    { this.state.monitoringMessage != 'Error' && 
+                    { this.state.monitoringMessage !== 'Error' && 
                         <img src={monitoringImage} alt={this.state.monitoringMessage} />
                     }
-                    { this.state.monitoringMessage == 'Error' &&
+                    { this.state.monitoringMessage === 'Error' &&
                         <img src={errorImage} alt={this.state.monitoringMessage} />
                     }
                     <br /><span>{this.state.monitoringMessage}</span><br /><br />

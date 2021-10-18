@@ -18,6 +18,7 @@ afterEach(() => {
 });
 
 jest.mock('./UserInfo', () => () => <div data-testid="UserInfo"></div>);
+jest.mock('./OnAirLightTile', () => () => <div data-testid="OnAirLightTile"></div>);
 
 describe('Given the user is not authenticated', () => {
   describe('When the user loads the page', () => {
@@ -40,6 +41,12 @@ describe('Given the user is not authenticated', () => {
               expect(disconnectButton).toHaveLength(0);
             });
 
+            it('Then the on-air connect tile should be displayed', () => {
+              act(() => {
+                render(<MicrosoftConnectTile />, container);
+              });
+              expect(screen.getByTestId(/OnAirLightTile/)).toBeInTheDocument();
+            });
 
             it('Then the user information should not be displayed', () => {
               act(() => {
