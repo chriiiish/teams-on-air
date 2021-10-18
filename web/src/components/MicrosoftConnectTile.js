@@ -47,7 +47,7 @@ class MicrosoftConnectTile extends React.Component{
                         </div>
                     }
                 </div>
-                <div className={activeAccount == null ? 'faded' : ''}>⬇</div>
+                <div className={activeAccount == null ? 'faded' : 'active'}>⬇</div>
                 <OnAirLightTile authenticatedWithMicrosoft={activeAccount != null} updateBoardIpAddress={this.updateBoardIpAddress}/>
           </div>
         );
