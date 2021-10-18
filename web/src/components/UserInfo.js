@@ -49,7 +49,7 @@ class UserInfo extends React.Component{
         this.problemTimeout = setInterval(this.noMessageReceived, 4000);
 
         if(this.props.boardIpAddress){
-            if (this.state.currentActivity !== this.state.previousActivity && 
+            if (this.state.currentActivity !== this.state.previousActivity || 
                 this.state.currentAvailability !== this.state.previousAvailability){
 
                 this.setState({
@@ -60,7 +60,7 @@ class UserInfo extends React.Component{
                 switch(this.state.currentAvailability){
                     case 'Busy':
                         if (this.state.currentActivity === 'InACall') setLedBoardColour(this.props.boardIpAddress, 255, 0, 0);
-                        else setLedBoardColour(this.props.boardIpAddress, 255, 255, 0);
+                        else setLedBoardColour(this.props.boardIpAddress, 0, 255, 0);
                         break;
                     case 'Available':
                         setLedBoardColour(this.props.boardIpAddress, 0, 255, 0);
@@ -69,7 +69,7 @@ class UserInfo extends React.Component{
                         setLedBoardColour(this.props.boardIpAddress, 0, 0, 0)
                         break;
                     default:
-                        setLedBoardColour(this.props.boardIpAddress, 255, 255, 0);
+                        setLedBoardColour(this.props.boardIpAddress, 0, 255, 0);
                         break;
                 }
             }
