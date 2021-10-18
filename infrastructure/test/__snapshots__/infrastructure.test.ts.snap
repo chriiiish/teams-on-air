@@ -235,28 +235,40 @@ Object {
       },
       "Type": "AWS::ApiGateway::BasePathMapping",
     },
-    "ApiGatewayRestApiDeploymentF3960560302a6c2d98aace6253f59cc33f7bc5d6": Object {
+    "ApiGatewayRestApiDeploymentF3960560b040f5b17a59b5e439ffdb295b8567f5": Object {
       "DependsOn": Array [
         "ApiGatewayawsapigatewayiotreqvalF92AA473",
+        "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7OPTIONS028921B3",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7POST499F1FC0",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7F128586B",
+        "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6OPTIONS7D60E273",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6POST3A65FD6E",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel63EF65F87",
+        "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5OPTIONSCA688D07",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5POST36FC3E48",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel59CFFE376",
+        "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4OPTIONS9128C46E",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4POSTD390359B",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4851323DF",
+        "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3OPTIONSA62C84A1",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3POST76781AD4",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3B0431F8E",
+        "ApiGatewayRestApimessagetopiclevel1topiclevel2OPTIONSED9C0E7E",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2POSTCBDD02E0",
         "ApiGatewayRestApimessagetopiclevel1topiclevel2AB9E777B",
+        "ApiGatewayRestApimessagetopiclevel1OPTIONSCC0DE500",
         "ApiGatewayRestApimessagetopiclevel1POST23CFDA7B",
         "ApiGatewayRestApimessagetopiclevel1710FD332",
+        "ApiGatewayRestApimessageOPTIONS5159A7CA",
         "ApiGatewayRestApimessage973C9887",
+        "ApiGatewayRestApiOPTIONSDE91A6D5",
+        "ApiGatewayRestApishadowthingNameshadowNameOPTIONS483D6150",
         "ApiGatewayRestApishadowthingNameshadowNamePOSTD959F9EC",
         "ApiGatewayRestApishadowthingNameshadowName6B131683",
+        "ApiGatewayRestApishadowthingNameOPTIONSF433A5AC",
         "ApiGatewayRestApishadowthingNamePOST296748EF",
         "ApiGatewayRestApishadowthingNameF5501025",
+        "ApiGatewayRestApishadowOPTIONSF2D6FBFC",
         "ApiGatewayRestApishadow51C21A1A",
       ],
       "Metadata": Object {
@@ -289,7 +301,7 @@ Object {
           "Format": "{\\"requestId\\":\\"$context.requestId\\",\\"ip\\":\\"$context.identity.sourceIp\\",\\"user\\":\\"$context.identity.user\\",\\"caller\\":\\"$context.identity.caller\\",\\"requestTime\\":\\"$context.requestTime\\",\\"httpMethod\\":\\"$context.httpMethod\\",\\"resourcePath\\":\\"$context.resourcePath\\",\\"status\\":\\"$context.status\\",\\"protocol\\":\\"$context.protocol\\",\\"responseLength\\":\\"$context.responseLength\\"}",
         },
         "DeploymentId": Object {
-          "Ref": "ApiGatewayRestApiDeploymentF3960560302a6c2d98aace6253f59cc33f7bc5d6",
+          "Ref": "ApiGatewayRestApiDeploymentF3960560b040f5b17a59b5e439ffdb295b8567f5",
         },
         "MethodSettings": Array [
           Object {
@@ -306,6 +318,62 @@ Object {
         "TracingEnabled": true,
       },
       "Type": "AWS::ApiGateway::Stage",
+    },
+    "ApiGatewayRestApiOPTIONSDE91A6D5": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Fn::GetAtt": Array [
+            "ApiGatewayRestApi7538854B",
+            "RootResourceId",
+          ],
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApiUsagePlanDAD804ED": Object {
       "Properties": Object {
@@ -350,6 +418,59 @@ Object {
       },
       "Type": "AWS::ApiGateway::Resource",
     },
+    "ApiGatewayRestApimessageOPTIONS5159A7CA": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApimessage973C9887",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
     "ApiGatewayRestApimessagetopiclevel1710FD332": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -361,6 +482,59 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewayRestApimessagetopiclevel1OPTIONSCC0DE500": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApimessagetopiclevel1710FD332",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApimessagetopiclevel1POST23CFDA7B": Object {
       "Metadata": Object {
@@ -470,6 +644,59 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewayRestApimessagetopiclevel1topiclevel2OPTIONSED9C0E7E": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApimessagetopiclevel1topiclevel2AB9E777B",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApimessagetopiclevel1topiclevel2POSTCBDD02E0": Object {
       "Metadata": Object {
@@ -581,6 +808,59 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3OPTIONSA62C84A1": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3B0431F8E",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3POST76781AD4": Object {
       "Metadata": Object {
@@ -694,6 +974,59 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4OPTIONS9128C46E": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4851323DF",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4POSTD390359B": Object {
       "Metadata": Object {
@@ -809,6 +1142,59 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5OPTIONSCA688D07": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel59CFFE376",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5POST36FC3E48": Object {
       "Metadata": Object {
@@ -926,6 +1312,59 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6OPTIONS7D60E273": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel63EF65F87",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6POST3A65FD6E": Object {
       "Metadata": Object {
@@ -1045,6 +1484,59 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7OPTIONS028921B3": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7F128586B",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApimessagetopiclevel1topiclevel2topiclevel3topiclevel4topiclevel5topiclevel6topiclevel7POST499F1FC0": Object {
       "Metadata": Object {
@@ -1170,6 +1662,59 @@ Object {
       },
       "Type": "AWS::ApiGateway::Resource",
     },
+    "ApiGatewayRestApishadowOPTIONSF2D6FBFC": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApishadow51C21A1A",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
     "ApiGatewayRestApishadowthingNameF5501025": Object {
       "Properties": Object {
         "ParentId": Object {
@@ -1181,6 +1726,59 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewayRestApishadowthingNameOPTIONSF433A5AC": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApishadowthingNameF5501025",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApishadowthingNamePOST296748EF": Object {
       "Metadata": Object {
@@ -1290,6 +1888,59 @@ Object {
         },
       },
       "Type": "AWS::ApiGateway::Resource",
+    },
+    "ApiGatewayRestApishadowthingNameshadowNameOPTIONS483D6150": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "'",
+                      Object {
+                        "Ref": "branchname",
+                      },
+                      "on-air.cjl.nz'",
+                    ],
+                  ],
+                },
+                "method.response.header.Vary": "'Origin'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Vary": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "ApiGatewayRestApishadowthingNameshadowName6B131683",
+        },
+        "RestApiId": Object {
+          "Ref": "ApiGatewayRestApi7538854B",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
     },
     "ApiGatewayRestApishadowthingNameshadowNamePOSTD959F9EC": Object {
       "Metadata": Object {

@@ -112,6 +112,11 @@ export class InfrastructureStack extends cdk.Stack {
         },
         restApiName: `On-Air`,
         description: 'Teams On-Air light API for communicating to light',
+        defaultCorsPreflightOptions: {
+          allowOrigins: [
+            DOMAIN_NAME
+          ]
+        }
       }
     });
 
