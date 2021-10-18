@@ -2,7 +2,7 @@
 
 exports[`Given that the infrastructure should not change When making changes to the code Then the Cloudformation template should not change (if you meant to, run \`npm run update-snapshot\`) 1`] = `
 Object {
-  "Description": "FunQR: Front-end website that generates NZCovidTracer QR Codes",
+  "Description": "Teams On Air: An on-air light for microsoft teams",
   "Mappings": Object {
     "AWSCloudFrontPartitionHostedZoneIdMap": Object {
       "aws": Object {
@@ -148,7 +148,7 @@ Object {
                   Object {
                     "Ref": "branchname",
                   },
-                  "funqr.cjl.nz",
+                  "on-air.cjl.nz",
                 ],
               ],
             },
@@ -160,7 +160,7 @@ Object {
                 Object {
                   "Ref": "branchname",
                 },
-                "funqr.cjl.nz",
+                "on-air.cjl.nz",
               ],
             ],
           },
@@ -235,7 +235,7 @@ Object {
                 Object {
                   "Ref": "branchname",
                 },
-                "funqr.cjl.nz",
+                "on-air.cjl.nz",
               ],
             ],
           },
@@ -269,7 +269,7 @@ Object {
               Object {
                 "Ref": "branchname",
               },
-              "funqr.cjl.nz cloudfront",
+              "on-air.cjl.nz cloudfront",
             ],
           ],
         },
@@ -281,7 +281,7 @@ Object {
               Object {
                 "Ref": "branchname",
               },
-              "funqr.cjl.nz.",
+              "on-air.cjl.nz.",
             ],
           ],
         },
@@ -298,7 +298,7 @@ Object {
               Object {
                 "Ref": "branchname",
               },
-              "funqr.cjl.nz",
+              "on-air.cjl.nz",
             ],
           ],
         },
@@ -311,7 +311,7 @@ Object {
                   Object {
                     "Ref": "branchname",
                   },
-                  "funqr.cjl.nz",
+                  "on-air.cjl.nz",
                 ],
               ],
             },
