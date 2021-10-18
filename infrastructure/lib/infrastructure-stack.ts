@@ -97,7 +97,7 @@ export class InfrastructureStack extends cdk.Stack {
             "Effect": "Allow",
             "Action": "iot:*",
             "Resource": [
-              `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:client/${IOT_THING}`,
+              `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:client/${IOT_THING.thingName}`,
               `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:thing/${IOT_THING.thingName}`,
               `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:topicfilter/${IOT_THING.thingName}/*`,
               `arn:aws:iot:${props?.env?.region}:${props?.env?.account}:topicfilter/$aws/things/${IOT_THING.thingName}/*`,

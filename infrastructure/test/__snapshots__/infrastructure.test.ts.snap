@@ -2315,7 +2315,7 @@ Object {
               "Action": "iot:*",
               "Effect": "Allow",
               "Resource": Array [
-                "arn:aws:iot:undefined:undefined:client/TestInfrastructureStack/iot-thing [AWS::IoT::Thing]",
+                "arn:aws:iot:undefined:undefined:client/OnAir001",
                 "arn:aws:iot:undefined:undefined:thing/OnAir001",
                 "arn:aws:iot:undefined:undefined:topicfilter/OnAir001/*",
                 "arn:aws:iot:undefined:undefined:topicfilter/$aws/things/OnAir001/*",
