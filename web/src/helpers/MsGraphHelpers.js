@@ -26,11 +26,7 @@ export async function callMsGraph(msalContext, endpoint, callback) {
         account: accounts[0]
     }).then(callGraph)
     .catch((e) => {
-        instance.acquireTokenPopup(loginRequest)
-        .then(callGraph)
-        .catch((e) => {
-            console.error("Already asking for scopes - cannot ask again!");
-            console.error(e);
-        });
+        instance.acquireTokenRedirect(loginRequest)
+        .then(callGraph);
     });
 }
