@@ -6,7 +6,10 @@ import * as certmgr from '@aws-cdk/aws-certificatemanager';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as iot from '@aws-cdk/aws-iot';
 import * as apigatewayiot from '@aws-solutions-constructs/aws-apigateway-iot';
+import * as apigateway from '@aws-cdk/aws-apigatewayv2';
+import * as apigwintegreations from '@aws-cdk/aws-apigatewayv2-integrations';
 import { CfnParameter, RemovalPolicy } from '@aws-cdk/core';
+import * as lambda from '@aws-cdk/aws-lambda';
 
 export class InfrastructureStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -108,28 +111,48 @@ export class InfrastructureStack extends cdk.Stack {
       }
     });
 
-    const APIGATEWAY_IOT = new apigatewayiot.ApiGatewayToIot(this, 'ApiGateway', {
-      iotEndpoint: 'a2rtq0babjncfg-ats', // This value can be found in IOT Core console > Settings
-      apiGatewayCreateApiKey: true,
-      apiGatewayProps: {
-        domainName: {
-          domainName: `api.${DOMAIN_NAME}`,
-          certificate: CERTIFICATE
-        },
-        restApiName: `On-Air`,
-        description: 'Teams On-Air light API for communicating to light',
-        defaultCorsPreflightOptions: {
-          allowOrigins: ["*"]
-        }
-      }
+    // const APIGATEWAY_IOT = new apigatewayiot.ApiGatewayToIot(this, 'ApiGateway', {
+    //   iotEndpoint: 'a2rtq0babjncfg-ats', // This value can be found in IOT Core console > Settings
+    //   apiGatewayCreateApiKey: true,
+    //   apiGatewayProps: {
+    //     domainName: {
+    //       domainName: `api.${DOMAIN_NAME}`,
+    //       certificate: CERTIFICATE
+    //     },
+    //     restApiName: `On-Air`,
+    //     description: 'Teams On-Air light API for communicating to light',
+    //     defaultCorsPreflightOptions: {
+    //       allowOrigins: ["*"]
+    //     }
+    //   }
+    // });
+
+    const SEND_TO_IOT_FUNCTION = new lambda.Function(this, 'send-to-iot-function', {
+      runtime: lambda.Runtime.NODEJS_14_X,
+      code: lambda.Code.fromAsset('lambda-functions'),
+      handler: 'SendToIoT.handler'
     });
+
+    const WEBSOCKET_API = new apigateway.WebSocketApi(this, 'websocket-api', {
+      apiName: `Teams-On-Air-${BRANCH_NAME.valueAsString}`,
+      description: `Teams On-Air Websocket API that transfers data to AWS IoT`
+    });
+    WEBSOCKET_API.addRoute('update-light', {
+      integration: new apigwintegreations.LambdaWebSocketIntegration({
+        handler: SEND_TO_IOT_FUNCTION
+      })
+    });    
 
     const DNS_RECORD_API = new r53.CnameRecord(this, 'dns-record-api', {
       recordName: `api.${SUBDOMAIN_NAME}`,
       comment: `api.${DOMAIN_NAME} API`,
       zone: DOMAIN,
-      domainName: APIGATEWAY_IOT.apiGateway.domainName?.domainNameAliasDomainName ?? ''
+      domainName: WEBSOCKET_API.apiEndpoint
     });
-    
+
+    const WEBSOCKET_API_DOMAIN = new apigateway.DomainName(this, 'websocket-api-domain-name', {
+      domainName: DNS_RECORD_API.domainName,
+      certificate: CERTIFICATE
+    });
   }
 }
