@@ -8,12 +8,12 @@ char CONFIG_WIFI_SSID[]         = "wifi-ssid";
 char CONFIG_WIFI_PASSWORD[]     = "wifi-password";
 
 // AWS IOT Settings
-char CONFIG_AWS_ENDPOINT[]      = "xxxxxxxxxxxx-ats.iot.us-east-1.amazonaws.com";
+char CONFIG_AWS_ENDPOINT[]      = "xxxxxxxx-ats.iot.us-east-1.amazonaws.com";
 char CONFIG_AWS_REGION[]        = "us-east-1";
-const char* CONFIG_AWS_TOPIC    = "$aws/things/Julie/shadow/update";
+const char* CONFIG_DEVICE_NAME  = "OnAir001";
 
 // CERTIFICATES
-static const char CONFIG_CERT_PEM_CRT[] PROGMEM = R"EOF(
+static const char CONFIG_PEM_CRT[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
 -----END CERTIFICATE-----
 )EOF";

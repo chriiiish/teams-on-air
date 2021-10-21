@@ -17,10 +17,14 @@ StaticJsonBuffer<1000> jsonBuffer;
 BearSSL::X509List client_crt(CONFIG_PEM_CRT);
 BearSSL::PrivateKey client_key(CONFIG_PEM_KEY);
 BearSSL::X509List rootCert(CONFIG_CERT_CA);
-
 WiFiClientSecure wiFiClient;
 void msgReceived(char* topic, byte* payload, unsigned int len);
 PubSubClient pubSubClient(CONFIG_AWS_ENDPOINT, 8883, msgReceived, wiFiClient); 
+
+// AWS IoT Topics
+char TOPIC_PUB_GET[80];
+char TOPIC_SUB_GET_ACCEPTED[80];
+char TOPIC_SUB_UPDATE_ACCEPTED[80];
 
 void setup() {
   // Configure LED pins for output
@@ -29,6 +33,11 @@ void setup() {
   pinMode(GREEN_LED, OUTPUT);
 
   Serial.begin(115200);
+
+  // Pub/Sub Topics
+  snprintf(TOPIC_PUB_GET,             sizeof(TOPIC_PUB_GET),             "%s%s%s", "$aws/things/", CONFIG_DEVICE_NAME, "/shadow/get");
+  snprintf(TOPIC_SUB_GET_ACCEPTED,    sizeof(TOPIC_SUB_GET_ACCEPTED),    "%s%s%s", "$aws/things/", CONFIG_DEVICE_NAME, "/shadow/get/accepted");
+  snprintf(TOPIC_SUB_UPDATE_ACCEPTED, sizeof(TOPIC_SUB_UPDATE_ACCEPTED), "%s%s%s", "$aws/things/", CONFIG_DEVICE_NAME, "/shadow/update/accepted");
 
   // Connect to WiFi
   pulseLeds(false, false, true);
@@ -51,7 +60,7 @@ void loop() {
 
   // Get shadow state from AWS IOT
   if (!firstSendDone){
-      boolean result = pubSubClient.publish("$aws/things/OnAir001/shadow/get", "");
+      boolean result = pubSubClient.publish(TOPIC_PUB_GET, "");
       Serial.print("Requested Shadow State from AWS...");   
       Serial.println(result ? "SUCCESS" : "FAILURE"); 
       firstSendDone = true;
@@ -62,6 +71,9 @@ void loop() {
 /*
  * IOT PUB/SUB
  */
+
+
+// Runs on status update (message received on topic)
 void msgReceived(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message received on "); Serial.print(topic); Serial.print(": ");
   char message[1000] = "";
@@ -89,21 +101,22 @@ void msgReceived(char* topic, byte* payload, unsigned int length) {
   jsonBuffer.clear();
 }
 
+// Subscribes to the IoT topics for this device shadow / status
 void pubSubCheckConnect() {
   if ( ! pubSubClient.connected()) {
     Serial.print("PubSubClient connecting to: "); Serial.print(CONFIG_AWS_ENDPOINT);
     while ( ! pubSubClient.connected()) {
       Serial.print(".");
-      pubSubClient.connect("OnAir001");
+      pubSubClient.connect(CONFIG_DEVICE_NAME);
     }
     Serial.println(" connected");
 
     // Subscribe to topics
-    boolean result = pubSubClient.subscribe("$aws/things/OnAir001/shadow/get/accepted");
-    Serial.print("Subscribed to topic $aws/things/OnAir001/shadow/get/accepted ");
+    boolean result = pubSubClient.subscribe(TOPIC_SUB_GET_ACCEPTED);
+    Serial.printf("Subscribed to topic %s ", TOPIC_SUB_GET_ACCEPTED);
     Serial.println(result ? "SUCCESS" : "FAILURE");
-    result = pubSubClient.subscribe("$aws/things/OnAir001/shadow/update/accepted");
-    Serial.print("Subscribed to topic $aws/things/OnAir001/shadow/update/accepted ");
+    result = pubSubClient.subscribe(TOPIC_SUB_UPDATE_ACCEPTED);
+    Serial.printf("Subscribed to topic %s ", TOPIC_SUB_UPDATE_ACCEPTED);
     Serial.println(result ? "SUCCESS" : "FAILURE");
 
     pulseLeds(true, true, true);
@@ -111,6 +124,7 @@ void pubSubCheckConnect() {
   pubSubClient.loop();
 }
 
+// Sets the current time from ntp
 void setCurrentTime() {
   configTime(3 * 3600, 0, "pool.ntp.org", "time.nist.gov");
 
@@ -131,6 +145,8 @@ void setCurrentTime() {
 /*
  * BOARD LOGIC DISPLAY STUFF
  */
+
+
 // Pulse and LED
 // Blocks This takes 510ms
 void pulseLeds(bool red, bool green, bool blue) {
