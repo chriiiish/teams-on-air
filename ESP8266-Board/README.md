@@ -1,5 +1,4 @@
-# Teams On-Air 
-## Physical On-Air light
+# Teams On-Air Physical Light
 This is the code and documentation for the physical on-air light
 
 <img src="../docs/imgs/board_01.jpg" alt="Circuit Board Picture" width="200"/> 
@@ -7,7 +6,7 @@ This is the code and documentation for the physical on-air light
 <img src="../docs/imgs/board_03.jpg" alt="Circuit Board Picture" width="200"/> 
 
 
-# Components
+## Components
  - ESP8266 Board https://www.aliexpress.com/item/33051171807.html
  - Bread Board https://www.aliexpress.com/item/4000805673115.html
  - Powerbank https://www.pbtech.co.nz/product/BAPMIX22234/Xiaomi-Mi-20000mAh-Power-Bank-3-Pro-Edition---Blac 
@@ -16,7 +15,7 @@ This is the code and documentation for the physical on-air light
  - 25cm USB to USB Micro cable https://www.aliexpress.com/item/4001177937131.html
 
 
-# Development Environment
+## Development Environment
 You will need Arduino IDE to upload this program to the ESP8266 board.
 
 Download [here](https://www.arduino.cc/en/software)
@@ -38,7 +37,7 @@ You will also need to add the following libraries (Tools > Manage Libraries):
  - **ArduinoJson** by Benoit Blanchon
 
 
-# Circuit Diagram
+## Circuit Diagram
 
 <img src="../docs/imgs/circuit.png" alt="Circuit diagram" > 
 
@@ -49,7 +48,7 @@ Connections:
  - NodeMCU D3 ➡ Blue LED + ➡ Blue LED - ➡ GND
 
 
-# Config File (config.h)
+## Config File (config.h)
 
 The [config file](Teams-Lighting-Controller/config.h) contains the following values that need to be set:
 
@@ -65,7 +64,7 @@ The [config file](Teams-Lighting-Controller/config.h) contains the following val
 | CONFIG_CERT_CA       | The CA Cert for AWS IoT - this is unlikely to change as it expires in 2038!                                                                                                 |
 
 
-# Generating the device certificate
+## Generating the device certificate
 Once the [infrastructure](../infrastructure/README.md) has been spun up you will need to generate the device certificate and key for this light. To do this:
 
  1. Go to the [AWS IoT Console > Manage > Things > OnAir001](https://console.aws.amazon.com/iot/home?region=us-east-1#/thing/OnAir001) > Certificates > Create Certificate
@@ -83,11 +82,11 @@ Once the [infrastructure](../infrastructure/README.md) has been spun up you will
     3. Choose TeamsOnAir-main-iotpolicy-xxxxxxxxxx
     4. Click attach
 
-## Using device certificates in the config file
+### Using device certificates in the config file
 Copy the values of the private key and the device certificate into the `config.h` file
 
 
-# Getting Started
+## Getting Started
 1. Install the Arduino IDE
 2. Install the ESP8266 Drivers
 3. Choose the NodeMCU board from Tools > Boards
@@ -100,7 +99,7 @@ Copy the values of the private key and the device certificate into the `config.h
 10. Push the program to the board
 
 
-# LED Status Lights
+## LED Status Lights
 The board indicates its status using the LEDs when it starts up. Below are the states you will observe when the board starts up:
 
 | LED Pattern                | Meaning              |
@@ -110,7 +109,7 @@ The board indicates its status using the LEDs when it starts up. Below are the s
 | Pulsing Red + Green + Blue | Connected to AWS IoT |
 
 
-# Debugging
+## Debugging
 The board writes out to Serial (115200). 
 You can see logs in the Serial Monitor in the Arduino IDE
 

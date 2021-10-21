@@ -1,4 +1,4 @@
-# Teams On Air Web Application
+# Teams On-Air Web Application
 
 This is the code for the actual website. 
 
