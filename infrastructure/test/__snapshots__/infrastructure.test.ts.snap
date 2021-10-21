@@ -276,6 +276,26 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
+    "apigatewayroleE6D48DBD": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
     "distributionCFDistribution99A57736": Object {
       "Properties": Object {
         "DistributionConfig": Object {

@@ -173,6 +173,11 @@ export class InfrastructureStack extends cdk.Stack {
     }));
     LAMBDA_ROLE.addManagedPolicy(iam.ManagedPolicy.fromManagedPolicyArn(this, 'policy-basic-execution', 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'));
 
+    const API_GATEWAY_ROLE = new iam.Role(this, 'api-gateway-role', {
+      assumedBy: new iam.ServicePrincipal('apigateway')
+    });
+    API_GATEWAY_ROLE.addManagedPolicy(iam.ManagedPolicy.fromManagedPolicyArn(this, 'policy-basic-execution-2', 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'));
+
     const SEND_TO_IOT_INTEGRATION = new apigwintegreations.LambdaWebSocketIntegration({
       handler: SEND_TO_IOT_FUNCTION,
     });
