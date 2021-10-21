@@ -83,3 +83,82 @@ To generate a test stack (_branch-name_.on-air.cjl.nz) do two things:
 We use test stacks to spin up new instances for pull-requests. E.g. if you create a pull request off the `feature/my-test-branch` branch, then it will create a test environment `my-test-branch.on-air.cjl.nz` 
 
 See `.github/workflows/deploy-test-environment-create.yml`
+
+## WebSocket API
+Rather than use a traditional REST API, this project uses a WebSocket API. The reason for doing this is so that the tab stays alive even when in the background of the web browser. For more information see [here](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API#policies_in_place_to_aid_background_page_performance).
+
+This does mean it's a bit harder to document the API, but here we go... 
+
+### Connecting to the api
+Connect by opening a websocket to wss://api.on-air.cjl.nz/
+
+```javascript
+var ws = new WebSocket('wss://api.on-air.cjl.nz/');
+```
+
+### Sending data
+All data is wrapped in the following object:
+
+```json
+{
+   "action": "{ROUTE}",
+   "data": {}
+}
+```
+
+Depending on the ROUTE you will have different values for DATA:
+
+<table>
+   <thead>
+      <tr>
+         <th>ROUTE</th>
+         <th>Data payload</th>
+         <th>Explanation</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>update-light</td>
+         <td><pre>
+{
+   "id": "OnAir001",
+   "red":255,
+   "green":255,
+   "blue":255
+}
+</pre></td>
+         <td>
+            <b>id</b>: the id of the light (should be the same across AWS IoT and NodeMCU board) <br />
+            <b>red</b>: the brightness of the RED led (0-255) <br />
+            <b>green</b>: the brightness of the GREEN led (0-255) <br />
+            <b>blue</b>: the brightness of the BLUE led (0-255) <br />
+         </td>
+      </tr>
+      <tr>
+         <td>ping</td>
+         <td><pre>"keep-alive"</td>
+         <td>
+            A keep-alive packet to keep the connection open
+         </td>
+   </tbody>
+</table>
+
+For example:
+```javascript
+var ws = new WebSocket('wss://api.on-air.cjl.nz');
+
+ws.send({
+   "action": "ping",
+   "data": "keep-alive"
+});
+
+ws.send({
+   "action": "update-light",
+   "data": {
+      "id": "OnAir001",
+      "red": 0,
+      "green": 255,
+      "blue": 0
+   }
+});
+```
