@@ -133,27 +133,14 @@ export class InfrastructureStack extends cdk.Stack {
       handler: 'SendToIoT.handler'
     });
 
-    const AUTHORIZER_FUNCTION = new lambda.Function(this, 'authorizer-function', {
-      runtime: lambda.Runtime.NODEJS_14_X,
-      code: lambda.Code.fromAsset('lambda-functions'),
-      handler: 'authorizer.handler'
-    });
-
     const WEBSOCKET_API = new apigateway.WebSocketApi(this, 'websocket-api', {
       apiName: `Teams-On-Air-${BRANCH_NAME.valueAsString}`,
-      description: `Teams On-Air Websocket API that transfers data to AWS IoT`
+      description: `Teams On-Air Websocket API that transfers data to AWS IoT`,
     });
     WEBSOCKET_API.addRoute('update-light', {
       integration: new apigwintegreations.LambdaWebSocketIntegration({
         handler: SEND_TO_IOT_FUNCTION
-      })
-    });
-
-    const WEBSOCKET_API_AUTHORIZER = new apigateway.CfnAuthorizer(this, 'websocket-api-authorizer', {
-      apiId: WEBSOCKET_API.apiId,
-      authorizerType: 'REQUEST',
-      name: 'default',
-      authorizerUri: `arn:aws:apigateway:${this.region}:lambda:path/2015-03-31/functions/${AUTHORIZER_FUNCTION.functionArn}/invocations`
+      }),
     });
 
     const DNS_RECORD_API = new r53.CnameRecord(this, 'dns-record-api', {
