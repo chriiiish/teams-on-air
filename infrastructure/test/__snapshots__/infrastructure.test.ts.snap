@@ -604,6 +604,9 @@ Object {
           ],
           "Version": "2012-10-17",
         },
+        "ManagedPolicyArns": Array [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+        ],
       },
       "Type": "AWS::IAM::Role",
     },

@@ -145,11 +145,11 @@ export class InfrastructureStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_14_X,
       code: lambda.Code.fromAsset('lambda-functions'),
       handler: 'SendToIoT.handler',
-      logRetention: logs.RetentionDays.ONE_WEEK,
       environment: {
         IOT_URL: IOT_URL.valueAsString
       },
-      role: LAMBDA_ROLE
+      role: LAMBDA_ROLE,
+      logRetention: logs.RetentionDays.ONE_WEEK
     });
     LAMBDA_ROLE.attachInlinePolicy(new Policy(this, 'lambda-iot-access', {
       policyName: 'Publish-to-AWS-IoT',
@@ -165,6 +165,7 @@ export class InfrastructureStack extends cdk.Stack {
         ]
       })
     }));
+    LAMBDA_ROLE.addManagedPolicy(iam.ManagedPolicy.fromManagedPolicyArn(this, 'policy-basic-execution', 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'));
 
     const SEND_TO_IOT_INTEGRATION = new apigwintegreations.LambdaWebSocketIntegration({
       handler: SEND_TO_IOT_FUNCTION,
