@@ -3,23 +3,23 @@ const AWS = require('aws-sdk');
 exports.handler =  async function(event, context) {
 
     if (event.requestContext.routeKey == 'ping'){
+        console.log("PING RECEIVED");
         return { statusCode: 200, body: 'Data sent.' };
     }
 
     if (event.requestContext.routeKey != 'update-light'){
-        return { statusCode: 400, body: 'Route Key must be ping or update-light'}
+        console.log(`KEY ${event.requestContext.routeKey} NOT FOUND`);
+        return { statusCode: 400, body: 'Route Key must be ping or update-light' };
     }
 
-    // Configure AWS IoT Endpoint
-    const iotData = new AWS.iotData(process.env.IOT_URL);
-
+    // Get data from incoming payload
     const data = JSON.parse(event.body).data;
     const lightId = data.id;
     const red = data.red;
     const green = data.green;
     const blue = data.blue;
 
-    const iotData = { 
+    const iotPayload = { 
         state: {
             desired: {
                 red: red,
@@ -29,18 +29,15 @@ exports.handler =  async function(event, context) {
         }
     };
 
-    console.log(event);
-    console.log(iotData);
-
+    // Send data to AWS IoT
+    const iotData = new AWS.IotData({ endpoint: process.env.IOT_URL });
     var params = {
         topic: `$aws/things/${lightId}/shadow/update`,
-        payload: JSON.stringify(iotData),
-        qos: '1'
-      };
-    await iotdata.publish(params, function(err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
-    });
+        payload: JSON.stringify(iotPayload),
+        qos: '0'
+    };
+    const request = iotData.publish(params);
+    await request.send();
 
-    return { statusCode: 200, body: 'Complete' };
+    return { statusCode: 200, body: 'Data relayed.' };
 };

@@ -159,8 +159,14 @@ export class InfrastructureStack extends cdk.Stack {
             {
                 "Sid": "PublishOnAllTopics",
                 "Effect": "Allow",
-                "Action": "iot:Publish",
-                "Resource": `arn:aws:iot:${this.region}:${props?.env?.account}:topic/*`
+                "Action": [
+                  "iot:Publish",
+                  "iot:Connect"
+                ],
+                "Resource": [
+                  `arn:aws:iot:${this.region}:${props?.env?.account}:topic/*`,
+                  `arn:aws:iot:*:116827804402:client/*`,
+                ]
             }
         ]
       })
