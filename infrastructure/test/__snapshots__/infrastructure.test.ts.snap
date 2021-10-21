@@ -456,12 +456,7 @@ Object {
           ],
         },
         "ResourceRecords": Array [
-          Object {
-            "Fn::GetAtt": Array [
-              "websocketapi5DE51C20",
-              "ApiEndpoint",
-            ],
-          },
+          "n[TOKEN.288]}",
         ],
         "TTL": "1800",
         "Type": "CNAME",

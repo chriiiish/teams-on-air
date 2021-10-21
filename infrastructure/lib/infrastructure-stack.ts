@@ -192,7 +192,7 @@ export class InfrastructureStack extends cdk.Stack {
       recordName: `api.${SUBDOMAIN_NAME}`,
       comment: `api.${DOMAIN_NAME} API`,
       zone: DOMAIN,
-      domainName: WEBSOCKET_API.apiEndpoint
+      domainName: WEBSOCKET_API.apiEndpoint.slice(6) // Get rid of wss:// at the start
     });
 
     const WEBSOCKET_API_DOMAIN = new apigateway.DomainName(this, 'websocket-api-domain-name', {
