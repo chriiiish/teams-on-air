@@ -659,6 +659,35 @@ Object {
       },
       "Type": "AWS::ApiGatewayV2::DomainName",
     },
+    "websocketapiprodstage4C8DBDAF": Object {
+      "DependsOn": Array [
+        "websocketapidomainname361FC0B5",
+      ],
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi5DE51C20",
+        },
+        "AutoDeploy": true,
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGatewayV2::Stage",
+    },
+    "websocketapiprodstageTestInfrastructureStackwebsocketapidomainnameundefined9DEB66DE": Object {
+      "DependsOn": Array [
+        "websocketapidomainname361FC0B5",
+        "websocketapiprodstage4C8DBDAF",
+      ],
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi5DE51C20",
+        },
+        "DomainName": Object {
+          "Ref": "dnsrecordapi1E3B17DD",
+        },
+        "Stage": "prod",
+      },
+      "Type": "AWS::ApiGatewayV2::ApiMapping",
+    },
     "websocketapiupdatelightRoute29A2B02D": Object {
       "Properties": Object {
         "ApiId": Object {

@@ -154,5 +154,14 @@ export class InfrastructureStack extends cdk.Stack {
       domainName: DNS_RECORD_API.domainName,
       certificate: CERTIFICATE
     });
+
+    const WEBSOCKET_API_PROD_STAGE = new apigateway.WebSocketStage(this, 'websocket-api-prod-stage', {
+      webSocketApi: WEBSOCKET_API,
+      stageName: 'prod',
+      autoDeploy: true,
+      domainMapping: {
+        domainName: WEBSOCKET_API_DOMAIN
+      }
+    });
   }
 }
