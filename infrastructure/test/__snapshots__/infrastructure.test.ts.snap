@@ -40,16 +40,16 @@ Object {
       "Description": "S3 key for asset version \\"00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494\\"",
       "Type": "String",
     },
-    "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eArtifactHash89053B35": Object {
-      "Description": "Artifact hash for asset \\"5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050e\\"",
+    "AssetParameters8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25ArtifactHashA7A3A938": Object {
+      "Description": "Artifact hash for asset \\"8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25\\"",
       "Type": "String",
     },
-    "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3Bucket195E0C9B": Object {
-      "Description": "S3 bucket for asset \\"5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050e\\"",
+    "AssetParameters8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25S3BucketFBE9470E": Object {
+      "Description": "S3 bucket for asset \\"8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25\\"",
       "Type": "String",
     },
-    "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3VersionKeyF8DE4EAA": Object {
-      "Description": "S3 key for asset version \\"5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050e\\"",
+    "AssetParameters8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25S3VersionKeyC3D73D52": Object {
+      "Description": "S3 key for asset version \\"8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25\\"",
       "Type": "String",
     },
     "branchname": Object {
@@ -144,6 +144,91 @@ Object {
         "ManagedPolicyArns": Array [
           Object {
             "Fn::Sub": "arn:\${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "authorizerfunctionE8DF8ABA": Object {
+      "DependsOn": Array [
+        "authorizerfunctionServiceRoleB2BE3D06",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25S3BucketFBE9470E",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25S3VersionKeyC3D73D52",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25S3VersionKeyC3D73D52",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Handler": "authorizer.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "authorizerfunctionServiceRoleB2BE3D06",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "authorizerfunctionServiceRoleB2BE3D06": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
           },
         ],
       },
@@ -546,7 +631,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3Bucket195E0C9B",
+            "Ref": "AssetParameters8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25S3BucketFBE9470E",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -559,7 +644,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3VersionKeyF8DE4EAA",
+                          "Ref": "AssetParameters8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25S3VersionKeyC3D73D52",
                         },
                       ],
                     },
@@ -572,7 +657,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3VersionKeyF8DE4EAA",
+                          "Ref": "AssetParameters8f9c9acc7be50e23a48f02d5604b7fa19b1fb7dba27a8775d1c249a29df64a25S3VersionKeyC3D73D52",
                         },
                       ],
                     },
@@ -642,6 +727,35 @@ Object {
         "RouteSelectionExpression": "$request.body.action",
       },
       "Type": "AWS::ApiGatewayV2::Api",
+    },
+    "websocketapiauthorizer": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi5DE51C20",
+        },
+        "AuthorizerType": "REQUEST",
+        "AuthorizerUri": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:aws:apigateway:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":lambda:path/2015-03-31/functions/",
+              Object {
+                "Fn::GetAtt": Array [
+                  "authorizerfunctionE8DF8ABA",
+                  "Arn",
+                ],
+              },
+              "/invocations",
+            ],
+          ],
+        },
+        "Name": "default",
+      },
+      "Type": "AWS::ApiGatewayV2::Authorizer",
     },
     "websocketapidomainname361FC0B5": Object {
       "Properties": Object {
