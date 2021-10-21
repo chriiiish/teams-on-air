@@ -189,7 +189,7 @@ export class InfrastructureStack extends cdk.Stack {
     });
 
     const WEBSOCKET_API_DOMAIN = new apigateway.DomainName(this, 'websocket-api-domain-name', {
-      domainName: `api.${SUBDOMAIN_NAME}`,
+      domainName: `api.${DOMAIN_NAME}`,
       certificate: CERTIFICATE
     });
 

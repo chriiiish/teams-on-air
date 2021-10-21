@@ -438,7 +438,7 @@ Object {
               Object {
                 "Ref": "branchname",
               },
-              "on-air API",
+              "on-air.cjl.nz API",
             ],
           ],
         },
@@ -838,7 +838,7 @@ Object {
               Object {
                 "Ref": "branchname",
               },
-              "on-air",
+              "on-air.cjl.nz",
             ],
           ],
         },
@@ -940,7 +940,7 @@ Object {
               Object {
                 "Ref": "branchname",
               },
-              "on-air",
+              "on-air.cjl.nz",
             ],
           ],
         },
