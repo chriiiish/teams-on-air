@@ -438,7 +438,7 @@ Object {
               Object {
                 "Ref": "branchname",
               },
-              "on-air.cjl.nz API",
+              "on-air API",
             ],
           ],
         },
@@ -456,7 +456,12 @@ Object {
           ],
         },
         "ResourceRecords": Array [
-          "n[TOKEN.288]}",
+          Object {
+            "Fn::GetAtt": Array [
+              "websocketapidomainname361FC0B5",
+              "RegionalDomainName",
+            ],
+          },
         ],
         "TTL": "1800",
         "Type": "CNAME",
@@ -826,7 +831,16 @@ Object {
     "websocketapidomainname361FC0B5": Object {
       "Properties": Object {
         "DomainName": Object {
-          "Ref": "dnsrecordapi1E3B17DD",
+          "Fn::Join": Array [
+            "",
+            Array [
+              "api.",
+              Object {
+                "Ref": "branchname",
+              },
+              "on-air",
+            ],
+          ],
         },
         "DomainNameConfigurations": Array [
           Object {
@@ -919,7 +933,16 @@ Object {
           "Ref": "websocketapi5DE51C20",
         },
         "DomainName": Object {
-          "Ref": "dnsrecordapi1E3B17DD",
+          "Fn::Join": Array [
+            "",
+            Array [
+              "api.",
+              Object {
+                "Ref": "branchname",
+              },
+              "on-air",
+            ],
+          ],
         },
         "Stage": "prod",
       },

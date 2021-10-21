@@ -188,16 +188,16 @@ export class InfrastructureStack extends cdk.Stack {
       integration: SEND_TO_IOT_INTEGRATION
     });
 
-    const DNS_RECORD_API = new r53.CnameRecord(this, 'dns-record-api', {
-      recordName: `api.${SUBDOMAIN_NAME}`,
-      comment: `api.${DOMAIN_NAME} API`,
-      zone: DOMAIN,
-      domainName: WEBSOCKET_API.apiEndpoint.slice(6) // Get rid of wss:// at the start
+    const WEBSOCKET_API_DOMAIN = new apigateway.DomainName(this, 'websocket-api-domain-name', {
+      domainName: `api.${SUBDOMAIN_NAME}`,
+      certificate: CERTIFICATE
     });
 
-    const WEBSOCKET_API_DOMAIN = new apigateway.DomainName(this, 'websocket-api-domain-name', {
-      domainName: DNS_RECORD_API.domainName,
-      certificate: CERTIFICATE
+    const DNS_RECORD_API = new r53.CnameRecord(this, 'dns-record-api', {
+      recordName: WEBSOCKET_API_DOMAIN.name,
+      comment: `${WEBSOCKET_API_DOMAIN.name} API`,
+      zone: DOMAIN,
+      domainName: WEBSOCKET_API_DOMAIN.regionalDomainName // Get rid of wss:// at the start
     });
 
     const WEBSOCKET_API_PROD_STAGE = new apigateway.WebSocketStage(this, 'websocket-api-prod-stage', {
