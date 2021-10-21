@@ -143,16 +143,16 @@ export class InfrastructureStack extends cdk.Stack {
       })
     });    
 
-    // const DNS_RECORD_API = new r53.CnameRecord(this, 'dns-record-api', {
-    //   recordName: `api.${SUBDOMAIN_NAME}`,
-    //   comment: `api.${DOMAIN_NAME} API`,
-    //   zone: DOMAIN,
-    //   domainName: WEBSOCKET_API.apiEndpoint
-    // });
+    const DNS_RECORD_API = new r53.CnameRecord(this, 'dns-record-api', {
+      recordName: `api.${SUBDOMAIN_NAME}`,
+      comment: `api.${DOMAIN_NAME} API`,
+      zone: DOMAIN,
+      domainName: WEBSOCKET_API.apiEndpoint
+    });
 
-    // const WEBSOCKET_API_DOMAIN = new apigateway.DomainName(this, 'websocket-api-domain-name', {
-    //   domainName: DNS_RECORD_API.domainName,
-    //   certificate: CERTIFICATE
-    // });
+    const WEBSOCKET_API_DOMAIN = new apigateway.DomainName(this, 'websocket-api-domain-name', {
+      domainName: DNS_RECORD_API.domainName,
+      certificate: CERTIFICATE
+    });
   }
 }

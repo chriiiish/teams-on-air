@@ -301,6 +301,46 @@ Object {
       },
       "Type": "AWS::Route53::RecordSet",
     },
+    "dnsrecordapi1E3B17DD": Object {
+      "Properties": Object {
+        "Comment": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "api.",
+              Object {
+                "Ref": "branchname",
+              },
+              "on-air.cjl.nz API",
+            ],
+          ],
+        },
+        "HostedZoneId": "Z0909161DL7J28OF5XCC",
+        "Name": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "api.",
+              Object {
+                "Ref": "branchname",
+              },
+              "on-air.cjl.nz.",
+            ],
+          ],
+        },
+        "ResourceRecords": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "websocketapi5DE51C20",
+              "ApiEndpoint",
+            ],
+          },
+        ],
+        "TTL": "1800",
+        "Type": "CNAME",
+      },
+      "Type": "AWS::Route53::RecordSet",
+    },
     "domaincertificateA050E5BB": Object {
       "Properties": Object {
         "DomainName": Object {
@@ -602,6 +642,22 @@ Object {
         "RouteSelectionExpression": "$request.body.action",
       },
       "Type": "AWS::ApiGatewayV2::Api",
+    },
+    "websocketapidomainname361FC0B5": Object {
+      "Properties": Object {
+        "DomainName": Object {
+          "Ref": "dnsrecordapi1E3B17DD",
+        },
+        "DomainNameConfigurations": Array [
+          Object {
+            "CertificateArn": Object {
+              "Ref": "domaincertificateA050E5BB",
+            },
+            "EndpointType": "REGIONAL",
+          },
+        ],
+      },
+      "Type": "AWS::ApiGatewayV2::DomainName",
     },
     "websocketapiupdatelightRoute29A2B02D": Object {
       "Properties": Object {
