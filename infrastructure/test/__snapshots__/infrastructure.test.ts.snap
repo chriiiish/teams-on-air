@@ -291,7 +291,7 @@ Object {
           "Version": "2012-10-17",
         },
         "ManagedPolicyArns": Array [
-          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
         ],
       },
       "Type": "AWS::IAM::Role",
