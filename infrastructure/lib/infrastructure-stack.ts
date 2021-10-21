@@ -152,7 +152,7 @@ export class InfrastructureStack extends cdk.Stack {
       role: LAMBDA_ROLE
     });
     LAMBDA_ROLE.attachInlinePolicy(new Policy(this, 'lambda-iot-access', {
-      policyName: 'Publish to AWS IoT',
+      policyName: 'Publish-to-AWS-IoT',
       document: iam.PolicyDocument.fromJson({
         "Version": "2012-10-17",
         "Statement": [
