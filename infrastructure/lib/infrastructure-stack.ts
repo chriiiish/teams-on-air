@@ -12,6 +12,8 @@ import { CfnParameter, RemovalPolicy } from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as iam from '@aws-cdk/aws-iam';
 import * as logs from '@aws-cdk/aws-logs';
+import { Policy } from '@aws-cdk/aws-iam';
+import { isMainThread } from 'worker_threads';
 
 export class InfrastructureStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -25,6 +27,12 @@ export class InfrastructureStack extends cdk.Stack {
       type: 'String',
       default: '',
       description: 'The branch this stack is for - used to create test instances off pull-requests. Needs trailing dot. Leave default for production'
+    });
+
+    const IOT_URL = new CfnParameter(this, 'iot-url', {
+      type: 'String',
+      default: 'a2rtq0babjncfg-ats.iot.us-east-1.amazonaws.com',
+      description: 'The IoT URL for your devices. You can retrieve this from the IoT Console > Settings > Device Data Endpoint'
     });
 
     const SUBDOMAIN_NAME = `${BRANCH_NAME.valueAsString}on-air`;
@@ -129,8 +137,8 @@ export class InfrastructureStack extends cdk.Stack {
     //   }
     // });
 
-    const WEBSOCKET_API_ROLE = new iam.Role(this, 'websocket-api-role', {
-      assumedBy: new iam.ServicePrincipal('apigateway')
+    const LAMBDA_ROLE = new iam.Role(this, 'lambda-role', {
+      assumedBy: new iam.ServicePrincipal('lambda')
     });
 
     const SEND_TO_IOT_FUNCTION = new lambda.Function(this, 'send-to-iot-function', {
@@ -138,7 +146,25 @@ export class InfrastructureStack extends cdk.Stack {
       code: lambda.Code.fromAsset('lambda-functions'),
       handler: 'SendToIoT.handler',
       logRetention: logs.RetentionDays.ONE_WEEK,
+      environment: {
+        IOT_URL: IOT_URL.valueAsString
+      },
+      role: LAMBDA_ROLE
     });
+    LAMBDA_ROLE.attachInlinePolicy(new Policy(this, 'lambda-iot-access', {
+      policyName: 'Publish to AWS IoT',
+      document: iam.PolicyDocument.fromJson({
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "PublishOnAllTopics",
+                "Effect": "Allow",
+                "Action": "iot:Publish",
+                "Resource": `arn:aws:iot:${this.region}:${props?.env?.account}:topic/*`
+            }
+        ]
+      })
+    }));
 
     const SEND_TO_IOT_INTEGRATION = new apigwintegreations.LambdaWebSocketIntegration({
       handler: SEND_TO_IOT_FUNCTION,
