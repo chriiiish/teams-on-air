@@ -140,14 +140,19 @@ export class InfrastructureStack extends cdk.Stack {
       logRetention: logs.RetentionDays.ONE_WEEK,
     });
 
+    const SEND_TO_IOT_INTEGRATION = new apigwintegreations.LambdaWebSocketIntegration({
+      handler: SEND_TO_IOT_FUNCTION,
+    });
+
     const WEBSOCKET_API = new apigateway.WebSocketApi(this, 'websocket-api', {
       apiName: `Teams-On-Air-${BRANCH_NAME.valueAsString}`,
       description: `Teams On-Air Websocket API that transfers data to AWS IoT`,
     });
     WEBSOCKET_API.addRoute('update-light', {
-      integration: new apigwintegreations.LambdaWebSocketIntegration({
-        handler: SEND_TO_IOT_FUNCTION,
-      })
+      integration: SEND_TO_IOT_INTEGRATION
+    });
+    WEBSOCKET_API.addRoute('ping', {
+      integration: SEND_TO_IOT_INTEGRATION
     });
 
     const DNS_RECORD_API = new r53.CnameRecord(this, 'dns-record-api', {

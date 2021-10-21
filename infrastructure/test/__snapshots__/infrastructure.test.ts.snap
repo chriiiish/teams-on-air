@@ -40,16 +40,16 @@ Object {
       "Description": "S3 key for asset version \\"00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494\\"",
       "Type": "String",
     },
-    "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eArtifactHash89053B35": Object {
-      "Description": "Artifact hash for asset \\"5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050e\\"",
+    "AssetParameters5c7a11825ccbfe4558844a4c6466946e5b88c140534cf91d9151115dab3039bdArtifactHash46A4F0C9": Object {
+      "Description": "Artifact hash for asset \\"5c7a11825ccbfe4558844a4c6466946e5b88c140534cf91d9151115dab3039bd\\"",
       "Type": "String",
     },
-    "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3Bucket195E0C9B": Object {
-      "Description": "S3 bucket for asset \\"5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050e\\"",
+    "AssetParameters5c7a11825ccbfe4558844a4c6466946e5b88c140534cf91d9151115dab3039bdS3BucketECD459EB": Object {
+      "Description": "S3 bucket for asset \\"5c7a11825ccbfe4558844a4c6466946e5b88c140534cf91d9151115dab3039bd\\"",
       "Type": "String",
     },
-    "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3VersionKeyF8DE4EAA": Object {
-      "Description": "S3 key for asset version \\"5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050e\\"",
+    "AssetParameters5c7a11825ccbfe4558844a4c6466946e5b88c140534cf91d9151115dab3039bdS3VersionKey15544B1F": Object {
+      "Description": "S3 key for asset version \\"5c7a11825ccbfe4558844a4c6466946e5b88c140534cf91d9151115dab3039bd\\"",
       "Type": "String",
     },
     "AssetParameters67b7823b74bc135986aa72f889d6a8da058d0c4a20cbc2dfc6f78995fdd2fc24ArtifactHashBA91B77F": Object {
@@ -668,7 +668,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3Bucket195E0C9B",
+            "Ref": "AssetParameters5c7a11825ccbfe4558844a4c6466946e5b88c140534cf91d9151115dab3039bdS3BucketECD459EB",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -681,7 +681,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3VersionKeyF8DE4EAA",
+                          "Ref": "AssetParameters5c7a11825ccbfe4558844a4c6466946e5b88c140534cf91d9151115dab3039bdS3VersionKey15544B1F",
                         },
                       ],
                     },
@@ -694,7 +694,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters5fd75dd2c1f73cb3e69e783a4cfbfd1a53969fa1f7a59a0bb0005433e727050eS3VersionKeyF8DE4EAA",
+                          "Ref": "AssetParameters5c7a11825ccbfe4558844a4c6466946e5b88c140534cf91d9151115dab3039bdS3VersionKey15544B1F",
                         },
                       ],
                     },
@@ -803,6 +803,63 @@ Object {
         ],
       },
       "Type": "AWS::ApiGatewayV2::DomainName",
+    },
+    "websocketapipingRouteAA58A76C": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi5DE51C20",
+        },
+        "RouteKey": "ping",
+        "Target": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "integrations/",
+              Object {
+                "Ref": "websocketapiupdatelightRouteWebSocketIntegration326d68bfa8abe8375e14bfa141b9de8e69056949",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "websocketapipingRouteTestInfrastructureStackwebsocketapipingRouteD68267AFPermissionFD567567": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "sendtoiotfunction6A3456AE",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "websocketapi5DE51C20",
+              },
+              "/*/*ping",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
     },
     "websocketapiprodstage4C8DBDAF": Object {
       "DependsOn": Array [
