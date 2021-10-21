@@ -10,6 +10,8 @@ import * as apigateway from '@aws-cdk/aws-apigatewayv2';
 import * as apigwintegreations from '@aws-cdk/aws-apigatewayv2-integrations';
 import { CfnParameter, RemovalPolicy } from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
+import * as iam from '@aws-cdk/aws-iam';
+import * as logs from '@aws-cdk/aws-logs';
 
 export class InfrastructureStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -127,10 +129,15 @@ export class InfrastructureStack extends cdk.Stack {
     //   }
     // });
 
+    const WEBSOCKET_API_ROLE = new iam.Role(this, 'websocket-api-role', {
+      assumedBy: new iam.ServicePrincipal('apigateway')
+    });
+
     const SEND_TO_IOT_FUNCTION = new lambda.Function(this, 'send-to-iot-function', {
       runtime: lambda.Runtime.NODEJS_14_X,
       code: lambda.Code.fromAsset('lambda-functions'),
-      handler: 'SendToIoT.handler'
+      handler: 'SendToIoT.handler',
+      logRetention: logs.RetentionDays.ONE_WEEK,
     });
 
     const WEBSOCKET_API = new apigateway.WebSocketApi(this, 'websocket-api', {
@@ -139,8 +146,8 @@ export class InfrastructureStack extends cdk.Stack {
     });
     WEBSOCKET_API.addRoute('update-light', {
       integration: new apigwintegreations.LambdaWebSocketIntegration({
-        handler: SEND_TO_IOT_FUNCTION
-      }),
+        handler: SEND_TO_IOT_FUNCTION,
+      })
     });
 
     const DNS_RECORD_API = new r53.CnameRecord(this, 'dns-record-api', {
