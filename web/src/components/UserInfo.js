@@ -35,10 +35,12 @@ class UserInfo extends React.Component{
         this.problemTimeout = setTimeout(this.noMessageReceived, 4000);
     }
 
+    // Gets user presence information from M365
     getUserPresenceData(){
         callMsGraph(this.props.msalContext, graphConfig.presenceEndpoint, this.setPresenceInformation);
     }
 
+    // Update physical light / interface with the current presence information
     setPresenceInformation(response){
         this.setState({
             currentAvailability: response.availability,

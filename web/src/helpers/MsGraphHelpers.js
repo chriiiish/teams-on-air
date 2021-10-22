@@ -1,5 +1,6 @@
 import { loginRequest } from "./MsalHelpers";
 
+// Make a call to the Microsoft Graph API
 export async function callMsGraph(msalContext, endpoint, callback) {
     const instance = msalContext.instance;
     const accounts = msalContext.accounts;

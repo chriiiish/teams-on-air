@@ -1,3 +1,4 @@
+// Connect to the API websocket
 export async function connectToSocket(onErrorCallback){
     const apiDomainName = (window.location.hostname === "localhost") ? 'api.on-air.cjl.nz' : `api.${window.location.hostname}`;
     const ws = new WebSocket(`wss://${apiDomainName}`);
@@ -39,6 +40,7 @@ export async function connectToSocket(onErrorCallback){
     return ws;
 }
 
+// Send the colours through to the physical light
 export function setLedBoardColour(socket, deviceName, red, green, blue) {
     socket.send(JSON.stringify({
         action: "update-light",
@@ -51,10 +53,12 @@ export function setLedBoardColour(socket, deviceName, red, green, blue) {
     }));
 };
 
+// Disconnect from the websocket
 export function disconnectWebSocket(socket){
     socket.close();
 }
 
+// Send a keep-alive packet to the API
 export function sendKeepAlive(socket){
     socket.send(JSON.stringify({ 
         action: "ping", 

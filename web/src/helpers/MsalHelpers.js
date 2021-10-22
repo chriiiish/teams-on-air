@@ -1,3 +1,4 @@
+// Microsoft 365 App Registration config
 export const msalConfig = {
     auth: {
       clientId: "e7437bd4-595b-4333-a64e-fe264f7d06d2",

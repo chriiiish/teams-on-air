@@ -18,19 +18,23 @@ class MicrosoftConnectTile extends React.Component{
         this.updateSocket = this.updateSocket.bind(this);
     }
 
+    // Login to M365
     login = () => this.props.msalContext.instance.loginRedirect();
 
+    // Logout from M365 on this application only
     logout = () => {
         localStorage.clear(); 
         window.location.reload();
     }
 
+    // Update the physical light name
     updateBoardDeviceName(deviceName) {
         this.setState({
             boardDeviceName: deviceName
         });
     }
 
+    // Update the API websocket
     updateSocket(socket){
         this.setState({
             socket: socket

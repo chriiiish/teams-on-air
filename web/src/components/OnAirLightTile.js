@@ -30,6 +30,7 @@ class OnAirLightTile extends React.Component{
         this.setState({ deviceName: event.target.value });
     }
 
+    // Connect to the API Websocket, setup keepalive
     async testBoardConnection(event) {
         event.preventDefault();
         
@@ -51,6 +52,7 @@ class OnAirLightTile extends React.Component{
         console.error(err);
     }
 
+    // Disconnect from the Board and API websocket
     disconnectBoard(event){
         event.preventDefault();
         setLedBoardColour(this.state.socket, this.state.deviceName, 0, 0, 0);
