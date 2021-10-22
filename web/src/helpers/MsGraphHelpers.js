@@ -26,6 +26,8 @@ export async function callMsGraph(msalContext, endpoint, callback) {
         account: accounts[0]
     }).then(callGraph)
     .catch((e) => {
+        console.error("Microsoft Graph error:");
+        console.error(e);
         instance.acquireTokenRedirect(loginRequest)
         .then(callGraph);
     });

@@ -10,10 +10,12 @@ class MicrosoftConnectTile extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            boardDeviceName: undefined
+            boardDeviceName: undefined,
+            socket: undefined
         };
 
         this.updateBoardDeviceName = this.updateBoardDeviceName.bind(this);
+        this.updateSocket = this.updateSocket.bind(this);
     }
 
     login = () => this.props.msalContext.instance.loginRedirect();
@@ -26,6 +28,12 @@ class MicrosoftConnectTile extends React.Component{
     updateBoardDeviceName(deviceName) {
         this.setState({
             boardDeviceName: deviceName
+        });
+    }
+
+    updateSocket(socket){
+        this.setState({
+            socket: socket
         });
     }
 
@@ -42,13 +50,13 @@ class MicrosoftConnectTile extends React.Component{
 
                     { msalAccounts.length > 0 &&
                         <div>
-                            <UserInfo user={activeAccount} boardDeviceName={this.state.boardDeviceName} />
+                            <UserInfo user={activeAccount} boardDeviceName={this.state.boardDeviceName} socket={this.state.socket} />
                             <button onClick={() => this.logout()}>Disconnect</button>
                         </div>
                     }
                 </div>
                 <div className={activeAccount == null ? 'faded' : 'active'}>⬇</div>
-                <OnAirLightTile authenticatedWithMicrosoft={activeAccount != null} updateBoardDeviceName={this.updateBoardDeviceName}/>
+                <OnAirLightTile authenticatedWithMicrosoft={activeAccount != null} updateBoardDeviceName={this.updateBoardDeviceName} updateSocket={this.updateSocket}/>
           </div>
         );
     }

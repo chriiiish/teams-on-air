@@ -49,6 +49,10 @@ class UserInfo extends React.Component{
         clearTimeout(this.problemTimeout);
         this.problemTimeout = setInterval(this.noMessageReceived, 4000);
 
+        if (this.props.socket === undefined){
+            return;
+        }
+
         if (this.state.currentActivity !== this.state.previousActivity || 
             this.state.currentAvailability !== this.state.previousAvailability ||
             this.props.boardDeviceName !== this.state.previousDeviceName
@@ -63,17 +67,17 @@ class UserInfo extends React.Component{
             if(this.props.boardDeviceName){
                 switch(this.state.currentAvailability){
                     case 'Busy':
-                        if (this.state.currentActivity === 'InACall') setLedBoardColour(this.props.boardDeviceName, 255, 0, 0);
-                        else setLedBoardColour(this.props.boardDeviceName, 0, 255, 0);
+                        if (this.state.currentActivity === 'InACall') setLedBoardColour(this.props.socket, this.props.boardDeviceName, 255, 0, 0);
+                        else setLedBoardColour(this.props.socket, this.props.boardDeviceName, 0, 255, 0);
                         break;
                     case 'Available':
-                        setLedBoardColour(this.props.boardDeviceName, 0, 255, 0);
+                        setLedBoardColour(this.props.socket, this.props.boardDeviceName, 0, 255, 0);
                         break;
                     case 'Offline':
-                        setLedBoardColour(this.props.boardDeviceName, 0, 0, 0)
+                        setLedBoardColour(this.props.socket, this.props.boardDeviceName, 0, 0, 0)
                         break;
                     default:
-                        setLedBoardColour(this.props.boardDeviceName, 0, 255, 0);
+                        setLedBoardColour(this.props.socket, this.props.boardDeviceName, 0, 255, 0);
                         break;
                 }
             }
