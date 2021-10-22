@@ -50,6 +50,18 @@ To create the Application see the instructions here: [Single-page application: A
 
 ![](../docs/imgs/microsoft_application.png)
 
+### Permissions
+Permissions required in the Microsoft Application:
+ - Microsoft Graph: `Presence.Read` (Delegated)
+ - Microsoft Graph: `User.Read` (Delegated)
+
+### Authentication
+Single-Page Application with:
+ - Access Tokens
+ - ID Tokens
+
+Accounts in any organizational directory (Any Azure AD directory - Multitenant)
+
 
 ## CSS
 The CSS styles here use [CSS custom props](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) (variables). You can find all the variable values in `index.css`. Do not define variables anywhere else.

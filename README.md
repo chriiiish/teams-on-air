@@ -1,5 +1,5 @@
 # Teams On Air
-An on-air light for microsoft teams
+A physical on-air light for Microsoft Teams
 
 
 ## Repo Layout
@@ -8,6 +8,7 @@ An on-air light for microsoft teams
   .
   ├── .github             # All CI/CD workflows
   ├── docs                # Files needed to support READMEs
+  ├── ESP8266-Board       # Code for the Arduino board 
   ├── infrastructure      # Cloud Infrastructure Code   
   ├── web                 # Web application Code
   └── README.md
@@ -15,7 +16,14 @@ An on-air light for microsoft teams
 
 
 ## About
-Enter a description about the project - what the purpose of it is. Include some GIFs of it working or other such stuff
+Imagine you're working away and you get a call through Microsoft Teams. You're in the office and you've got your headphones on. But how do other people know you're on a call? Well now they can! With the Teams On-Air light you've now got a physical light on your desk that reflects when you're on a call or not!
+
+<img src="docs/imgs/web_connected.png" height="300" /> <img src="docs/imgs/board_01.jpg" width="300" />
+
+
+## Demo
+
+[![Teams On-Air Light Demo](docs/imgs/demo_screenshot.png)](https://youtu.be/296F3C0Eh5M "Teams On-Air Light Demo")
 
 
 ## Google Analytics 👀
@@ -24,6 +32,7 @@ Not currently turned on, but if you install it in the project put the details he
 
 ## Documentation
 See the specific README files for how the web and infrastructure work:
+  * [physical board](ESP8266-Board/README.md)
   * [infrastructure](infrastructure/README.md)
   * [web application](web/README.md) 
 
@@ -65,14 +74,4 @@ To open this in the Azure Portal [CLICK HERE](https://portal.azure.com/?quicksta
   Object ID:                362555a5-a66e-4ae6-9150-952902587f62
   Directory ID:             3da725d9-22b5-4fff-848d-e0cd027b7bc0
 ```
-
-### Permissions
-Permissions required in the Microsoft Application:
- - Microsoft Graph: Presence.Read (Delegated)
-
-### Authentication
-Single-Page Application with:
- - Access Tokens
- - ID Tokens
-
-Accounts in any organizational directory (Any Azure AD directory - Multitenant)
+See [Web Application README](web/README.md) for further instructions on how to set this up
