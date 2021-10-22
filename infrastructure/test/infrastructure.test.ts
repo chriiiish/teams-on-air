@@ -162,3 +162,47 @@ describe('Given that we need configuration', () => {
     });
   });
 });
+
+describe('Given we need to pass data to the Physical light', () => {
+  describe('Then we need a API gateway', () => {
+    test('Then there should be an API gateway', () => {
+      expect(stack).toHaveResourceLike('AWS::ApiGatewayV2::Api');
+    });
+    test('Then the API gateway should be a websocket type', () => {
+      expect(stack).toHaveResourceLike('AWS::ApiGatewayV2::Api', {
+        ProtocolType: 'WEBSOCKET'
+      });
+    });
+    test('Then the API gateway should have a description', () => {
+      expect(stack).toHaveResourceLike('AWS::ApiGatewayV2::Api', {
+        Description: 'Teams On-Air Websocket API that transfers data to AWS IoT'
+      });
+    });
+    test('Then the API gateway should have a custom domain', () => {
+      expect(stack).toHaveResourceLike('AWS::ApiGatewayV2::DomainName');
+    });
+    test('Then the API gateway should have an integration', () => {
+      expect(stack).toHaveResourceLike('AWS::ApiGatewayV2::Integration');
+    });
+    test('Then the API gateway should have two routes', () => {
+      expect(stack).toHaveResourceLike('AWS::ApiGatewayV2::Route', {
+        RouteKey: 'update-light'
+      });
+      expect(stack).toHaveResourceLike('AWS::ApiGatewayV2::Route', {
+        RouteKey: 'ping'
+      });
+    });
+    test('Then we need a lambda function to relay data', () => {
+      expect(stack).toHaveResourceLike('AWS::Lambda::Function');
+    });
+  });
+  describe('Then we need an IoT backend', () => {
+    test('Then we need an IoT thing', () => {
+      expect(stack).toHaveResourceLike('AWS::IoT::Thing');
+    });
+    test('Then we need an IoT policy', () => {
+      expect(stack).toHaveResourceLike('AWS::IoT::Policy');
+    });
+  });
+});
+

@@ -588,18 +588,7 @@ Object {
               ],
               "Effect": "Allow",
               "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "arn:aws:iot:",
-                      Object {
-                        "Ref": "AWS::Region",
-                      },
-                      ":undefined:topic/*",
-                    ],
-                  ],
-                },
+                "arn:aws:iot:undefined:undefined:topic/*",
                 "arn:aws:iot:*:116827804402:client/*",
               ],
               "Sid": "PublishOnAllTopics",
