@@ -23,18 +23,19 @@ export async function connectToSocket(onErrorCallback){
         console.debug(data);
     };
 
+    const checkState = function(ws, resolve) {
+        if (ws.readyState !== ws.OPEN) {
+            setTimeout(checkState.bind(this, ws, resolve), 30);
+        } else {
+            console.log('Connection succeeded');
+            resolve(true);
+        }
+    };
+
     await new Promise((resolve, reject) => {
-        setTimeout(() => {
-            console.log("TIMEOUT");
-            if(ws.readyState !== ws.OPEN){
-                reject(false);
-            } else {
-                resolve(true);
-            }
-        }, 1000);
+        checkState(ws, resolve);
     });
 
-    console.log("RETURNING");
     return ws;
 }
 
