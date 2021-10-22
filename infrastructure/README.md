@@ -21,7 +21,6 @@ There are some cloudformation parameters that will need to be set in order to ge
 |--------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | branch-name  | The name of the branch this stack is deployed from. Used to spin up test environments automatically                                              |
 | iot-url      | The URL to access your AWS IoT instance. Needed for lambda to communicate with AWS IoT. Something like xxxxxxxxx-ats.iot.us-east-1.amazonaws.com |
-|              |                                                                                                                                                  |
 
 Note that you can either override these when doing `cdk deploy` *or* you can change the code in the [infrastructure-stack.ts](lib/infrastructure-stack.ts) file.
 
