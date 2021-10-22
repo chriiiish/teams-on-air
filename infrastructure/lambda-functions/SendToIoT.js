@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 
-exports.handler =  async function(event, context) {
+exports.handler = function(event, context) {
 
     if (event.requestContext.routeKey == 'ping'){
         console.log("PING RECEIVED");
@@ -36,8 +36,16 @@ exports.handler =  async function(event, context) {
         payload: JSON.stringify(iotPayload),
         qos: '0'
     };
-    const request = iotData.publish(params);
-    await request.send();
+    iotData.publish(params, function(err, data) {
+        if(err){
+        console.log("Error on MQTT publish: " + err);
+        }
+        else{
+        console.log("Success, I guess.");
+        }
+    });
+    console.log("Data relayed:");
+    console.log(params);
 
     return { statusCode: 200, body: 'Data relayed.' };
 };
