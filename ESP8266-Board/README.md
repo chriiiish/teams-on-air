@@ -1,9 +1,7 @@
 # Teams On-Air Physical Light
 This is the code and documentation for the physical on-air light
 
-<img src="../docs/imgs/board_01.jpg" alt="Circuit Board Picture" width="200"/> 
-<img src="../docs/imgs/board_02.jpg" alt="Circuit Board Picture" width="200"/> 
-<img src="../docs/imgs/board_03.jpg" alt="Circuit Board Picture" width="200"/> 
+<img src="../docs/imgs/board_01.jpg" alt="Circuit Board Picture" width="200"/> <img src="../docs/imgs/board_02.jpg" alt="Circuit Board Picture" width="200"/> <img src="../docs/imgs/board_03.jpg" alt="Circuit Board Picture" width="200"/> 
 
 
 ## Components
@@ -43,7 +41,7 @@ You will also need to add the following libraries (Tools > Manage Libraries):
 
 Connections:
 
- - NodeMCU D1 ➡ Red LED + ➡ Red LED - ➡ GND
+ - NodeMCU D1 ➡️ Red LED + ➡ Red LED - ➡ GND
  - NodeMCU D2 ➡ Green LED + ➡ Green LED - ➡ GND
  - NodeMCU D3 ➡ Blue LED + ➡ Blue LED - ➡ GND
 
@@ -93,7 +91,7 @@ Copy the values of the private key and the device certificate into the `config.h
 4. Plug in the ESP8266 into your computer
 5. Choose the correct COM port for the board (make sure you hold down FLASH button when plugging it into the computer)
 6. Install the needed libraries
-7. Open the 4 files in the [Teamps-Lighting-Controller](Teams-Lighting-Controller) directory
+7. Open the 4 files in the [Teams-Lighting-Controller](Teams-Lighting-Controller) directory
 8. Edit the config.h file to have all the necessary values
 9. Compile the program
 10. Push the program to the board
